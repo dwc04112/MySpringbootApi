@@ -1,5 +1,5 @@
-package kr.ac.daegu.springbootapi.test.controller;
 
+package kr.ac.daegu.springbootapi.test.controller;
 
 import kr.ac.daegu.springbootapi.test.model.TestDTO;
 import kr.ac.daegu.springbootapi.test.service.TestService;
@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 public class TestController {
 
-    public final TestService boardService;
+    public final TestService testService;
 
     @GetMapping(value = "/")
     public List<TestDTO> rootTest() throws Exception {
@@ -27,10 +27,9 @@ public class TestController {
         log.warn("logTest~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         log.error("logTest~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-
-        List<TestDTO> testList = boardService.getTestList();
+        // 간단한 list 생성
+        List<TestDTO> testList = testService.getTestList();
 
         return testList;
-
     }
 }
