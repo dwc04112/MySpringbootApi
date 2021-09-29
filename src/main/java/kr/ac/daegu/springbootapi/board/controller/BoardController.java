@@ -23,16 +23,19 @@ public class BoardController {
     public final BoardService boardService;
 
     @GetMapping(value = "/")
+    public List<BoardDTO> getBoardList(){
+        List<BoardDTO> list = boardService.getBoardList();
+        return list;
+    }
+
+    /*
     public List<BoardDTO> rootBoard() throws Exception {
-        log.trace("logTest~~~~~~~~~~~~~~~~~~~~~~~~~~~~"); // 로그의 5단계 trace(일반적으로 남기는 이벤트 기록) -> debug(디버깅용) -> info(알림) -> warn(경고) -> error(에러)
-        log.debug("logTest~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        log.info("logTest~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        log.warn("logTest~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        log.error("logTest~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
         List<BoardDTO> boardList = boardService.getBoardList();
 
         return boardList;
     }
+
+     */
 
 }

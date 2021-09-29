@@ -1,4 +1,3 @@
-
 package kr.ac.daegu.springbootapi.test.service;
 
 import kr.ac.daegu.springbootapi.test.model.TestDAO;
@@ -16,5 +15,11 @@ public class TestService {
 
     public List<TestDTO> getTestList() {
         return testDAO.getTestList();
+    }
+
+    public String insertTest(TestDTO testDTO) throws Exception {
+        // testDTO db에 insert
+        int result = testDAO.insertTest(testDTO);
+        return result + " rows inserted";
     }
 }
