@@ -6,5 +6,8 @@ import java.util.List;
 public interface BoardDAO {
     List<BoardDTO> getBoardList();
 
-    int insertBoard(BoardDTO boardDTO);
+    // 0929
+    // int insertBoard(BoardDTO boardDTO);
+
+    int postBoard(BoardDTO boardDTO);
 }

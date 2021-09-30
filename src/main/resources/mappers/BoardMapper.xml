@@ -6,27 +6,21 @@
         select * from board
     </select>
 
+    <select id="getBoardListOne" resultType="kr.ac.daegu.springbootapi.board.model.BoardDTO">
+        select * from board
+    </select>
+<!-- 0929 미션
     <insert id="insertBoard" parameterType="kr.ac.daegu.springbootapi.board.model.BoardDTO">
         insert into board (id,author, subject, content, writeDate, writeTime, readCount, commentCount, password, replyRootId, `depth`,orderNum)
         select max(id) + 1, #{author}, #{subject}, #{content},  CURDATE(), CURTIME(), 0, 0, #{password},max(id) + 1,0,0
         from board
     </insert>
-<!--
-    <insert id="postBoard" parameterType="kr.ac.daegu.springbootapi.board.model.BoardDTO">
-        INSERT INTO BOARD VALUES (  id,
-                                    author,
-                                    subject,
-                                    content,
-                                    writeDate,
-                                    writeTime,
-                                    readCount,
-                                    commentCount,
-                                    password,
-                                    pid,
-                                    depth,
-                                    porder,
-    </insert>
 -->
+
+    <insert id="postBoard" parameterType="kr.ac.daegu.springbootapi.board.model.BoardDTO">
+        insert into board (author, subject, content, writeDate, writeTime, readCount, commentCount, password, replyRootId, depth, orderNum)
+        values (#{author}, #{subject}, #{content}, CURDATE(), CURTIME(), 0, 0, #{password}, 0, 0, 0)
+    </insert>
     <!--<select id="selectUsers" parameterType="me.fleuve.springboot03.dto.UserDTO"
             resultType="me.fleuve.springboot03.dto.UserDTO">&lt;!&ndash; selectUsers()메서드를 호출하면 실행할 SELECT문이며, UserDTO 객체를 파라미터로 받아, UserDTO객체를 반환합니다.&ndash;&gt;
         SELECT `seq`, `name`, `country`
