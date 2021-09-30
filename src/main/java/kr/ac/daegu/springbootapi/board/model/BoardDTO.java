@@ -21,7 +21,7 @@ public class BoardDTO {
     private int readCount;               // 조회수
     private int commentCount;            // 댓글 갯수
     private String password;             // 수정 삭제를 위한 패스워드
-    private int pid;
+    private int replyRootId;
     private int depth;
-    private int porder;
+    private int orderNum;
 }

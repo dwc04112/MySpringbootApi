@@ -23,4 +23,7 @@ public class BoardService {
         int result = boardDAO.insertBoard(boardDTO);
         return result + " rows inserted";
     }
+    //0930
+   // public BoardDTO postBoard(BoardDTO boardDTO) {
+    //}
 }

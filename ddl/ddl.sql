@@ -10,31 +10,36 @@ CREATE TABLE `test` (
 )
 
 -- 게시글
-CREATE TABLE Board (
-                       id           INT           primary key COMMENT '게시글id', -- 게시글id
-                       author       VARCHAR(200)  NOT NULL COMMENT '작성자', -- 작성자
-                       subject      VARCHAR(300)  NOT NULL COMMENT '제목', -- 제목
-                       content      VARCHAR(2000) NOT NULL COMMENT '내용', -- 내용
-                       writeDate    DATE          NOT NULL COMMENT '작성일', -- 작성일
-                       writeTime    TIME          NOT NULL COMMENT '작성시각', -- 작성시각
-                       readCount    INT           NOT NULL COMMENT '조회수', -- 조회수
-                       commentCount INT           NOT NULL COMMENT '댓글수', -- 댓글수
-                       password     VARCHAR(300)  NOT NULL default '0000' COMMENT '수정삭제비밀번호' -- 수정삭제비밀번호
+CREATE TABLE `board` (
+                         `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '게시글id',
+                         `author` varchar(200) NOT NULL COMMENT '작성자',
+                         `subject` varchar(300) NOT NULL COMMENT '제목',
+                         `content` varchar(2000) NOT NULL COMMENT '내용',
+                         `writeDate` date NOT NULL COMMENT '작성일',
+                         `writeTime` time NOT NULL COMMENT '작성시각',
+                         `readCount` int(11) NOT NULL COMMENT '조회수',
+                         `commentCount` int(11) NOT NULL COMMENT '댓글수',
+                         `password` varchar(300) NOT NULL DEFAULT '0000' COMMENT '수정삭제비밀번호',
+                         `replyRootId` int(11) NOT NULL DEFAULT 0,
+                         `depth` int(11) NOT NULL DEFAULT 0,
+                         `orderNum` int(11) NOT NULL DEFAULT 0,
+                         PRIMARY KEY (`id`)
 )
-    COMMENT '게시글';
-alter table board add column pid Int not null default 0 -- 상위 글번호
-alter table board add column depth Int not null default 0
-alter table board add column porder Int not null default 0
 
 -- 댓글
-CREATE TABLE Comment (
-                         cid       INT           primary key COMMENT '댓글id', -- 댓글id
-                         id        INT           NOT NULL COMMENT '게시글id', -- 게시글id
-                         author    VARCHAR(200)  NOT NULL COMMENT '작성자', -- 작성자
-                         content   VARCHAR(2000) NOT NULL COMMENT '댓글내용', -- 댓글내용
-                         writeDate DATE          NOT NULL COMMENT '작성일', -- 작성일
-                         writeTime TIME          NOT NULL COMMENT '작성시각' -- 작성시각
+CREATE TABLE `comment` (
+                           `cid` int(11) NOT NULL AUTO_INCREMENT,
+                           `id` int(11) NOT NULL COMMENT '게시글id',
+                           `author` varchar(200) NOT NULL COMMENT '작성자',
+                           `content` varchar(2000) NOT NULL COMMENT '댓글내용',
+                           `writeDate` date NOT NULL COMMENT '작성일',
+                           `writeTime` time NOT NULL COMMENT '작성시각',
+                           PRIMARY KEY (`cid`),
+                           KEY `FK_Board_TO_Comment` (`id`),
+                           CONSTRAINT `FK_Board_TO_Comment` FOREIGN KEY (`id`) REFERENCES `board` (`id`)
 )
+
+
     COMMENT '댓글';
 
 -- 댓글 - 관계설정 (1:N)

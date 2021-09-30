@@ -40,6 +40,8 @@ public class BoardController {
     //post / board 해서 board 데이터 Insert 해보기
     @PostMapping(value = "/")
     public String insertBoard(@RequestBody BoardDTO boardDTO) throws Exception{
+        //0930 insert된 데이터가 뭔지 바로 리턴
+        //BoardDTO dto = boardService.postBoard(boardDTO);
         log.debug("insertBoard");
         return boardService.insertBoard(boardDTO);
     }
