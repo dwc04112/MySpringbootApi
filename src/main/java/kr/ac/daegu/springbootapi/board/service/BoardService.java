@@ -4,6 +4,7 @@ package kr.ac.daegu.springbootapi.board.service;
 
 import kr.ac.daegu.springbootapi.board.model.BoardDAO;
 import kr.ac.daegu.springbootapi.board.model.BoardDTO;
+import kr.ac.daegu.springbootapi.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,21 @@ public class BoardService {
         }
 
 
+    public ApiResponse<BoardDTO> getBoardById(int id) {
+        BoardDTO data = boardDAO.getBoardById(id);
+        return new ApiResponse(true, data);
+    }
+
+    // Board테이블의 isDel 컬럼의 데이터를 'Y' 로 업데이트
+    public ApiResponse<BoardDTO> updateIsDelBoardById(int id) {
+        int updatedRow = boardDAO.updateIsDelBoardById(id);
+        if(updatedRow > 0) {
+            return new ApiResponse(true, "board id " + id + " is successfully deleted");
+        }
+        return new ApiResponse(false, "failed to delete board id " + id);
+    }
+
+
 }
 
     /* 0929 미션 및 실행성공 코드
@@ -72,4 +88,23 @@ public class BoardService {
     }
 
      */
+
+/*
+       // 실행 성공 코드
+       // 0930 글 읽기
+        public List<BoardDTO> getBoardRead(int id) {
+            log.debug("id ::: " + id);
+            return boardDAO.getBoardRead(id);
+        }
+
+        //글 삭제
+    public String deleteBoard(int id) throws Exception {
+
+        int result = boardDAO.deleteBoard(id);
+        if(result > 0){
+            return result + "rows deleted";
+        }
+        throw new Exception("failed to delete"+id+"content");
+    }
+ */
 

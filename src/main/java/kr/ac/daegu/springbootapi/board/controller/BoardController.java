@@ -37,7 +37,30 @@ public class BoardController {
         log.debug("id: " + id);
         return boardService.putBoard(id, boardDTO);
     }
+
+    /* mission 1001 글 읽기 & 글 삭제 리뷰 */
+    // 글 읽기
+    // 요청URL은 GET http://localhost:8080/board/{id}
+    @GetMapping(value = "/{id}")
+    public ApiResponse<BoardDTO> getBoardById(@PathVariable int id) throws Exception {
+        return boardService.getBoardById(id);
+    }
+
+    // 글 삭제
+    // isDeleted : Y로 업데이트 시킴.
+    // 요청URL은 DELETE http://localhost:8080/board/{id}
+    @DeleteMapping(value = "/{id}")
+    public ApiResponse<BoardDTO> updateIsDelBoardById(@PathVariable int id) throws Exception {
+        return boardService.updateIsDelBoardById(id);
+    }
 }
+
+
+
+
+
+
+
     //post / board 해서 board 데이터 Insert 해보기
 
     /*
@@ -58,7 +81,31 @@ public class BoardController {
         log.debug("insertBoard");
         return boardService.insertBoard(boardDTO);
     }
+     */
+
+
+    /*
+    //mission 0930 글 읽기 삭제
+    // 글 읽기
+    // 요청URL은 GET http://localhost:8080/board/{id}
+    //수정해야함 0930
+    @GetMapping(value = "/{id}")
+    public ApiResponse<BoardDTO> getBoardRead(@PathVariable int id){
+        log.debug("id: " + id);
+        List<BoardDTO> list= boardService.getBoardRead(id);
+        return new ApiResponse(true, list);
+
+    }
+    // 글 삭제
+    // 요청URL은 DELETE http://localhost:8080/board/{id}
+    @DeleteMapping(value = "/{id}")
+    public String deleteBoard(@PathVariable int id) throws Exception{
+        log.debug("id : " + id);
+        return boardService.deleteBoard(id);
+    }
 
      */
+
+
 
 
