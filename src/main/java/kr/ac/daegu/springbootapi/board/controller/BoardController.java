@@ -53,6 +53,7 @@ public class BoardController {
     public ApiResponse<BoardDTO> updateIsDelBoardById(@PathVariable int id) throws Exception {
         return boardService.updateIsDelBoardById(id);
     }
+
 }
 
 
