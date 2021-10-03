@@ -47,7 +47,7 @@ public class BoardService {
         //subject(없으면 그대로),
         //content(없으면 그대로),
         //writeDate, writeTime 업데이트
-        public String putBoard(int id, BoardDTO boardDTO) throws Exception {
+        public ApiResponse<BoardDTO> putBoard(int id, BoardDTO boardDTO) throws Exception {
             // author,
             // content,
             // subject,
@@ -56,10 +56,19 @@ public class BoardService {
             boardDTO.setId(id);
             boardDTO.setWriteDate(LocalDate.now());
             boardDTO.setWriteTime(LocalTime.now());
-            int result = boardDAO.putBoard(boardDTO);
-
-            if(result > 0){
-                return result + " rows updated";
+            String pass1 = boardDAO.getBoardById(id).getPassword();
+            String pass2 = boardDTO.getPassword();
+            log.debug("service password1 ::: "+pass1);
+            log.debug("service password2 ::: "+pass2);
+            if(pass1.equals(pass2)){
+                log.debug("아이디 일치");
+                int result = boardDAO.putBoard(boardDTO);
+                if(result > 0){
+                    return new ApiResponse(true ,"success to update board id : " + id);
+                }
+            }else{
+                log.debug("아이디 불일치");
+                return new ApiResponse( false,"password incorrentn board id : " + id,null);
             }
             throw new Exception("failed to update " + id + " content");
         }

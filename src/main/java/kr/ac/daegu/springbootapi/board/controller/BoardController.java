@@ -31,11 +31,15 @@ public class BoardController {
 
         return new ApiResponse(true, dto);
     }
+
+    //4. 글 수정하기 : 패스워드와 일치하면 수정되도록 1003
     @PutMapping(value = "/{id}")
-    public String putBoard(@PathVariable int id,
+    public ApiResponse<BoardDTO> putBoard(@PathVariable int id,
                            @RequestBody BoardDTO boardDTO) throws Exception {
         log.debug("id: " + id);
         return boardService.putBoard(id, boardDTO);
+        //return new ApiResponse(true,msg);
+        //return boardService.putBoard(id, boardDTO);
     }
 
     /* mission 1001 글 읽기 & 글 삭제 리뷰 */
@@ -53,6 +57,7 @@ public class BoardController {
     public ApiResponse<BoardDTO> updateIsDelBoardById(@PathVariable int id) throws Exception {
         return boardService.updateIsDelBoardById(id);
     }
+
 
 }
 

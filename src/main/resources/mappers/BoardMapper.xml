@@ -18,7 +18,8 @@
             content=#{content},
             subject=#{subject},
             writeDate=#{writeDate},
-            writeTime=#{writeTime}
+            writeTime=#{writeTime},
+            password=#{password}
         WHERE id=#{id}
     </update>
 
