@@ -4,6 +4,8 @@ import java.util.List;
 
 @Repository
 public interface BoardDAO {
+
+
     int putBoard(BoardDTO boardDTO);
 
     List<BoardDTO> getBoardList();
@@ -13,6 +15,7 @@ public interface BoardDAO {
     BoardDTO getBoardById(int id);
 
     int updateIsDelBoardById(int id);
+
 
 }
 

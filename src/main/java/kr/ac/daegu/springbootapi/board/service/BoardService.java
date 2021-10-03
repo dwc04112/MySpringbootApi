@@ -20,6 +20,8 @@ public class BoardService {
 
     public final BoardDAO boardDAO;
 
+
+
     public List<BoardDTO> getBoardList() {
         return boardDAO.getBoardList();
     }
@@ -76,6 +78,8 @@ public class BoardService {
         }
         return new ApiResponse(false, "failed to delete board id " + id);
     }
+
+
 
 
 }

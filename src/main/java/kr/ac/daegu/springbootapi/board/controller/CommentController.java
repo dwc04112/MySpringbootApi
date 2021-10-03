@@ -1,12 +1,15 @@
 package kr.ac.daegu.springbootapi.board.controller;
 
+import kr.ac.daegu.springbootapi.board.model.BoardDTO;
 import kr.ac.daegu.springbootapi.board.model.CommentDTO;
+import kr.ac.daegu.springbootapi.board.service.BoardService;
 import kr.ac.daegu.springbootapi.board.service.CommentService;
 import kr.ac.daegu.springbootapi.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,7 +25,35 @@ public class CommentController {
      * */
     @GetMapping(value = "/")
     public ApiResponse<CommentDTO> getCommentList(){
+
         List<CommentDTO> list = commentService.getCommentList();
         return new ApiResponse(true, list);
     }
+
+    @GetMapping(value = "/{id}")
+    public ApiResponse<CommentDTO> getCommentById(@PathVariable int id)throws Exception{
+        List<CommentDTO> Clist = commentService.getCommentById(id);
+      // List<BoardDTO> Blist = commentService.commentBoardById(id);
+
+
+     //   return commentService.commentBoardById2(id);
+
+       // ArrayList list1 = new ArrayList();
+       // ArrayList list2 = new ArrayList();
+       // list1.add(commentService.commentBoardById2(id));
+       // list1.add(list2);
+       // list2.add(commentService.getCommentById(id));
+
+
+       // return new ApiResponse(true, list1);
+        return new ApiResponse(true, Clist);
+    }
+
+    //3. 댓글 쓰기
+    @PostMapping(value = "/")
+    public ApiResponse<CommentDTO> postComment(@RequestBody CommentDTO commentDTO)throws Exception{
+        String msg = commentService.postComment(commentDTO);
+        return new ApiResponse(true, msg);
+    }
+    
 }
