@@ -3,9 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.ac.daegu.springbootapi.board.model.BoardDAO">
     <select id="getBoardList" resultType="kr.ac.daegu.springbootapi.board.model.BoardDTO">
-        select * from board
+        select * from board where isDel = 'N'
     </select>
-
 
     <insert id="postBoard" parameterType="kr.ac.daegu.springbootapi.board.model.BoardDTO">
         insert into board (author, subject, content, writeDate, writeTime, readCount, commentCount, password, replyRootId, depth, orderNum)
@@ -25,14 +24,23 @@
 
     <select id="getBoardById" parameterType="int" resultType="kr.ac.daegu.springbootapi.board.model.BoardDTO">
         SELECT * from Board
-        WHERE id = #{id}
+        WHERE id = #{id} and isDel = 'N'
     </select>
+    <!-- 2번 수행하기 위해 comment 데이터 -->
+    <select id="getBoardComment" parameterType="int" resultType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
+        select id, author, content from comment where id=#{id}
+    </select>
+
+    
 
     <update id="updateIsDelBoardById" parameterType="int">
         UPDATE BOARD
         SET isDEL = 'Y'
         WHERE id = #{id}
     </update>
+
+
+
 
 
 
@@ -70,4 +78,37 @@
             <delete id="deleteBoard" parameterType="kr.ac.daegu.springbootapi.board.model.BoardDTO">
                 delete from board where id=#{id}
             </delete>
+
+
+    <select id="getBoardComment" parameterType="int" resultType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
+        select id, author, content from comment where id=#{id}
+    </select>
+
+    <select id="getBoardComment" parameterType="int" resultType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
+        select id, author, content from comment where id=#{id}
+    </select>
+
+    <resultMap id="getBoardById3" type="kr.ac.daegu.springbootapi.board.model.BoardDTO">
+        <result property="id" column="id"/>
+        <result property="author" column="author"/>
+        <result property="subject" column="subject"/>
+        <result property="content" column="content"/>
+        <collection property="commentList" column="id" javaType="java.util.ArrayList" ofType="kr.ac.daegu.springbootapi.board.model.CommentDTO" select="getBoardComment2"/>
+    </resultMap>
+
+
+
+
+    <select id="getBoardById2" resultType="getBoardById3">
+        SELECT * from board.id ,board.author ,board.subject ,board.content
+        WHERE id = #{id} and isDel = 'N'
+    </select>
+
+    <resultMap id="getBoardById3" type="kr.ac.daegu.springbootapi.board.model.BoardDTO">
+        <result property="id" column="id"/>
+        <result property="author" column="author"/>
+        <result property="subject" column="subject"/>
+        <result property="content" column="content"/>
+        <collection property="board" column="id" javaType="java.util.ArrayList" ofType="kr.ac.daegu.springbootapi.board.model.CommentDTO" select="getBoardComment"/>
+    </resultMap>
         -->

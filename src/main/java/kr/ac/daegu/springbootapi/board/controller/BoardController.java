@@ -50,12 +50,13 @@ public class BoardController {
         return boardService.getBoardById(id);
     }
 
-    // 글 삭제
+    // 5. 글 삭제하기 : 패스워드와 일치하면 isDel = Y로 설정 1004
     // isDeleted : Y로 업데이트 시킴.
     // 요청URL은 DELETE http://localhost:8080/board/{id}
     @DeleteMapping(value = "/{id}")
-    public ApiResponse<BoardDTO> updateIsDelBoardById(@PathVariable int id) throws Exception {
-        return boardService.updateIsDelBoardById(id);
+    public ApiResponse<BoardDTO> updateIsDelBoardById(@PathVariable int id,
+                                                      @RequestBody BoardDTO boardDTO) throws Exception {
+        return boardService.updateIsDelBoardById(id, boardDTO);
     }
 
 

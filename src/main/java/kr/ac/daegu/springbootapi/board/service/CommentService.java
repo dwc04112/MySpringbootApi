@@ -29,10 +29,12 @@ public class CommentService {
         return commentDAO.getCommentById(id);
     }
 
-
+    /*
     public List<BoardDTO> commentBoardById(int id) {
         return commentDAO.commentBoardById(id);
     }
+
+     */
 
 
 /*

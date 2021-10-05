@@ -4,6 +4,7 @@ package kr.ac.daegu.springbootapi.board.service;
 
 import kr.ac.daegu.springbootapi.board.model.BoardDAO;
 import kr.ac.daegu.springbootapi.board.model.BoardDTO;
+import kr.ac.daegu.springbootapi.board.model.CommentDTO;
 import kr.ac.daegu.springbootapi.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -61,31 +63,48 @@ public class BoardService {
             log.debug("service password1 ::: "+pass1);
             log.debug("service password2 ::: "+pass2);
             if(pass1.equals(pass2)){
-                log.debug("아이디 일치");
+                log.debug("비번 일치");
                 int result = boardDAO.putBoard(boardDTO);
                 if(result > 0){
                     return new ApiResponse(true ,"success to update board id : " + id);
                 }
             }else{
-                log.debug("아이디 불일치");
-                return new ApiResponse( false,"password incorrentn board id : " + id,null);
+                log.debug("비번 불일치");
+                return new ApiResponse( false,"password incorrect in board id : " + id,null);
             }
             throw new Exception("failed to update " + id + " content");
         }
 
 
     public ApiResponse<BoardDTO> getBoardById(int id) {
-        BoardDTO data = boardDAO.getBoardById(id);
-        return new ApiResponse(true, data);
+        //BoardDTO data = boardDAO.getBoardById(id);
+        //List<CommentDTO> cData = boardDAO.getBoardComment(id);
+        BoardDTO data1 = boardDAO.getBoardById(id);
+        ArrayList list = new ArrayList();
+        //list.add(data);
+        //list.add(cData);
+
+
+        return new ApiResponse(true, data1);
     }
 
     // Board테이블의 isDel 컬럼의 데이터를 'Y' 로 업데이트
-    public ApiResponse<BoardDTO> updateIsDelBoardById(int id) {
-        int updatedRow = boardDAO.updateIsDelBoardById(id);
-        if(updatedRow > 0) {
-            return new ApiResponse(true, "board id " + id + " is successfully deleted");
+    public ApiResponse<BoardDTO> updateIsDelBoardById (int id, BoardDTO boardDTO) throws Exception {
+        String pass1 = boardDAO.getBoardById(id).getPassword();
+        String pass2 = boardDTO.getPassword();
+        log.debug("service password1 ::: "+pass1);
+        log.debug("service password2 ::: "+pass2);
+        if(pass1.equals(pass2)){
+            log.debug("비번 일치");
+            int updatedRow = boardDAO.updateIsDelBoardById(id);
+            if(updatedRow > 0) {
+                return new ApiResponse(true, "success to delete board id : " + id);
+            }
+        }else{
+            log.debug("비번 불일치");
+            return new ApiResponse(false, "password incorrect in board id : " + id, null);
         }
-        return new ApiResponse(false, "failed to delete board id " + id);
+        throw new Exception("failed to delete board id : +id");
     }
 
 

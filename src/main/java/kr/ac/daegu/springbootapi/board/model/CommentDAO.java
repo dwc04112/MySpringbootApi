@@ -11,7 +11,7 @@ public interface CommentDAO {
     // CommentDTO getCommentById(int id);
     List<CommentDTO> getCommentById(int id);
 
-    List<BoardDTO> commentBoardById(int id);
+    // List<BoardDTO> commentBoardById(int id);
 
     // CommentDTO getCommentById2(int id, int cid);
 

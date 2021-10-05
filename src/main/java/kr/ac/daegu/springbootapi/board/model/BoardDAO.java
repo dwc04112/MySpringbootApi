@@ -16,7 +16,10 @@ public interface BoardDAO {
 
     int updateIsDelBoardById(int id);
 
+    List<CommentDTO> getBoardComment(int id);
 
+
+    BoardDTO getBoardById3(int id);
 }
 
 // 0929

@@ -10,18 +10,24 @@
        <!-- select * from board b , comment c where b.id =c.id and c.id=? -->
         select * from comment where id=#{id}
     </select>
-    <select id="getCommentById2" resultType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
-        <!-- select * from board b , comment c where b.id =c.id and c.id=? -->
-        select * from comment where id=#{id} and cid=#{cid}
-    </select>
 
-    <select id="commentBoardById" parameterType="int" resultType="kr.ac.daegu.springbootapi.board.model.BoardDTO">
-        SELECT * from Board
-        WHERE id = #{id}
-    </select>
 
     <insert id="postComment" parameterType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
         insert into comment (id,author,content,writeDate,writeTime)
         values (#{id}, #{author}, #{content}, CURDATE(), CURTIME())
     </insert>
 </mapper>
+
+
+        <!--
+            <select id="commentBoardById" parameterType="int" resultType="kr.ac.daegu.springbootapi.board.model.BoardDTO">
+                SELECT * from Board
+                WHERE id = #{id}
+            </select>
+
+            select * from board b , comment c where b.id =c.id and c.id=?
+            <select id="getCommentById2" resultType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
+                select * from comment where id=#{id} and cid=#{cid}
+            </select>
+
+        -->

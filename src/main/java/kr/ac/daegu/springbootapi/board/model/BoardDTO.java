@@ -8,11 +8,13 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
 @Setter
 public class BoardDTO {
+
     private int id;                      // 글 id(글번호)
     private String author;               // 작성자 이름
     private String subject;              // 글 제목
@@ -25,9 +27,13 @@ public class BoardDTO {
     private int replyRootId;
     private int depth;
     private int orderNum;
+   // private List<CommentDTO> commentList;
+
 
     @Override
     public String toString() {
+
+
             return "BoardDTO{" +
                     "id=" + id +
                     ", author='" + author + '\'' +
@@ -40,8 +46,10 @@ public class BoardDTO {
                     ", password='" + password + '\'' +
                     ", replyRootId=" + replyRootId +
                     ", depth=" + depth +
-                    ", orderNum=" + orderNum +
+                    ", orderNum" + orderNum +
+            //        ", commentList" + commentList +
                     '}';
+
 
     }
 }
