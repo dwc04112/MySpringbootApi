@@ -52,12 +52,20 @@ public class CommentService {
     }
 
  */
-    public String postComment(CommentDTO commentDTO)throws Exception {
-        int result = commentDAO.postComment(commentDTO);
-        if(result > 0){
-            return "Success to post comment in board id : "+commentDTO.getId();
+    public ApiResponse<CommentDTO> postComment(CommentDTO commentDTO)throws Exception {
+
+
+        int pass2 = commentDAO.countBoard(commentDTO.getId());
+        log.debug("postComment id2 ::: " +pass2);
+        if(pass2==0){
+            return new ApiResponse (false, "id value is not exists in board",null);
         }else{
-            throw new Exception("Falied to post comment in board");
+            int result = commentDAO.postComment(commentDTO);
+            if(result > 0){
+                return new ApiResponse(true,"Success to post comment in board id : "+commentDTO.getId());
+            }else{
+                throw new Exception("Falied to post comment in board");
+            }
         }
     }
 }

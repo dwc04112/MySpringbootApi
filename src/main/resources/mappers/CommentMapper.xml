@@ -16,6 +16,11 @@
         insert into comment (id,author,content,writeDate,writeTime)
         values (#{id}, #{author}, #{content}, CURDATE(), CURTIME())
     </insert>
+
+    <select id="countBoard" resultType="int">
+        select count(id) from board where id=#{id}
+    </select>
+    
 </mapper>
 
 

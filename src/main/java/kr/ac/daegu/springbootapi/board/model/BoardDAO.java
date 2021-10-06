@@ -19,7 +19,10 @@ public interface BoardDAO {
     List<CommentDTO> getBoardComment(int id);
 
 
-    BoardDTO getBoardById3(int id);
+     BoardDTO getBoardById2(int id);
+     List<CommentDTO> comments(int id);
+
+    //List<BoardDTO> getBoardById2(int id);
 }
 
 // 0929

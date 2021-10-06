@@ -52,8 +52,8 @@ public class CommentController {
     //3. 댓글 쓰기
     @PostMapping(value = "/")
     public ApiResponse<CommentDTO> postComment(@RequestBody CommentDTO commentDTO)throws Exception{
-        String msg = commentService.postComment(commentDTO);
-        return new ApiResponse(true, msg);
+        return commentService.postComment(commentDTO);
+
     }
     
 }

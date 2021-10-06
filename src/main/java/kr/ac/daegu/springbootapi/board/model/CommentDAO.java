@@ -16,4 +16,6 @@ public interface CommentDAO {
     // CommentDTO getCommentById2(int id, int cid);
 
     int postComment(CommentDTO commentDTO);
+
+    int countBoard(int pass1);
 }

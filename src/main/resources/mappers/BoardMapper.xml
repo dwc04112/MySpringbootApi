@@ -28,10 +28,9 @@
     </select>
     <!-- 2번 수행하기 위해 comment 데이터 -->
     <select id="getBoardComment" parameterType="int" resultType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
-        select id, author, content from comment where id=#{id}
+        select * from comment where id=#{id}
     </select>
 
-    
 
     <update id="updateIsDelBoardById" parameterType="int">
         UPDATE BOARD
@@ -42,9 +41,80 @@
 
 
 
-
-
 </mapper>
+
+<!--
+1003~~~~~1005
+    <resultMap id="getBoardById3" type="kr.ac.daegu.springbootapi.board.model.BoardDTO">
+        <id property="id" column="id"/>
+        <result property="id" column="id"/>
+        <result property="author" column="author"/>
+        <result property="subject" column="subject"/>
+        <result property="content" column="content"/>
+        <result property="writeDate" column="writeDate" />
+        <result property="writeTime" column="writeTime" />
+        <result property="readCount" column="readCount" />
+        <result property="commentCount" column="commentCount" />
+        <result property="password" column="password" />
+        <result property="replyRootId" column="replyRootId" />
+        <result property="depth" column="depth" />
+        <result property="orderNum" column="orderNum" />
+        <collection property="commentList" column="id"  ofType="kr.ac.daegu.springbootapi.board.model.CommentDTO" select="comments">
+        </collection>
+    </resultMap>
+
+    <select id="getBoardById2" resultMap="getBoardById3">
+        SELECT * from board
+        WHERE id = #{id} and isDel = 'N'
+
+        select *
+        from board b , comment c
+        where b.id =c.id and c.id=#{id} and b.isDel = 'N'
+    </select>
+
+    <select id="getBoardComment2"  resultType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
+        select *
+        from comment
+        where id=#{id}
+    </select>
+
+
+
+
+    <resultMap id="getBoardById3" type="kr.ac.daegu.springbootapi.board.model.BoardDTO">
+        <id property="id" column="id" />
+        <result property="id" column="b_id" />
+        <result property="author" column="b_author" />
+        <result property="subject" column="b_subject" />
+        <result property="content" column="b_content" />
+        <result property="writeDate" column="b_writeDate" />
+        <result property="writeTime" column="b_writeTime" />
+        <result property="readCount" column="b_readCount" />
+        <result property="commentCount" column="b_commentCount" />
+        <result property="password" column="b_password" />
+        <result property="replyRootId" column="b_replyRootId"/>
+        <result property="depth" column="b_depth" />
+        <result property="orderNum" column="b_orderNum" />
+        <collection property="commentList" ofType="kr.ac.daegu.springbootapi.board.model.BoardDTO" >
+            <id property="id" column="c_id" />
+            <result property="id" column="c_id"/>
+            <result property="author" column="c_author" />
+            <result property="content" column="c_content" />
+            <result property="writeDate" column="c_writeDate" />
+            <result property="writeTime" column="c_writeTime" />
+        </collection>
+    </resultMap>
+
+    <select id="getBoardById2" parameterType="int" resultMap="getBoardById3">
+        select
+            b.id b_id ,b.author b_author , b.subject b_subject , b.content b_content ,b.writeDate b_writeDate , b.writeTime b_writeTime ,
+            b.readCount b_readCount ,b.commentCount b_commentCount ,b.password b_password , b.replyRootId b_replyRootId ,b.`depth` b_depth ,b.orderNum b_orderNum ,
+            c.id c_id , c.author c_author , c.content c_content , c.writeDate c_writeDate , c.writeTime c_writeTime
+        from board b , comment c
+        where b.id =c.id and c.id=1 and b.isDel = 'N'
+    </select>
+-->
+
 
     <!--<select id="selectUsers" parameterType="me.fleuve.springboot03.dto.UserDTO"
             resultType="me.fleuve.springboot03.dto.UserDTO">&lt;!&ndash; selectUsers()메서드를 호출하면 실행할 SELECT문이며, UserDTO 객체를 파라미터로 받아, UserDTO객체를 반환합니다.&ndash;&gt;
@@ -80,9 +150,7 @@
             </delete>
 
 
-    <select id="getBoardComment" parameterType="int" resultType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
-        select id, author, content from comment where id=#{id}
-    </select>
+
 
     <select id="getBoardComment" parameterType="int" resultType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
         select id, author, content from comment where id=#{id}
@@ -112,3 +180,21 @@
         <collection property="board" column="id" javaType="java.util.ArrayList" ofType="kr.ac.daegu.springbootapi.board.model.CommentDTO" select="getBoardComment"/>
     </resultMap>
         -->
+
+
+<!--1006
+
+    <resultMap id="boardResultMap" type="kr.ac.daegu.springbootapi.board.model.CommentDTO">
+    </resultMap>
+
+
+    <select id="getBoardById2" parameterType="kr.ac.daegu.springbootapi.board.model.BoardDTO" resultMap="boardResultMap">
+        SELECT * from board
+        WHERE id = #{id} and isDel = 'N'
+    </select>
+
+    <select id="comments" parameterType="kr.ac.daegu.springbootapi.board.model.CommentDTO" resultMap="boardResultMap">
+        SELECT * from comment
+        WHERE id = #{id}
+    </select>
+-->

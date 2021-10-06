@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @Getter
@@ -27,7 +28,7 @@ public class BoardDTO {
     private int replyRootId;
     private int depth;
     private int orderNum;
-   // private List<CommentDTO> commentList;
+ //   private List<CommentDTO> commentList1;
 
 
     @Override
@@ -46,10 +47,13 @@ public class BoardDTO {
                     ", password='" + password + '\'' +
                     ", replyRootId=" + replyRootId +
                     ", depth=" + depth +
-                    ", orderNum" + orderNum +
-            //        ", commentList" + commentList +
+                    ", orderNum=" + orderNum +
+          //          ", commentList=" + commentList1 +
                     '}';
 
 
     }
+
+
 }
+

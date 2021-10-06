@@ -77,15 +77,25 @@ public class BoardService {
 
 
     public ApiResponse<BoardDTO> getBoardById(int id) {
-        //BoardDTO data = boardDAO.getBoardById(id);
-        //List<CommentDTO> cData = boardDAO.getBoardComment(id);
-        BoardDTO data1 = boardDAO.getBoardById(id);
+        BoardDTO data = boardDAO.getBoardById(id);
+        List<CommentDTO> cData = boardDAO.getBoardComment(id);
+        // List<CommentDTO> cData = boardDAO.comments(id);
+//      BoardDTO data1 = boardDAO.getBoardById2(id);
+        //List<BoardDTO> data1 = boardDAO.getBoardById2(id);
         ArrayList list = new ArrayList();
+//        list.add("author :"+data.getAuthor());
+  //      list.add("subject :"+data.getSubject());
+    //    list.add("content :"+data.getContent());
+
+        list.add(data);
+        list.add(cData);
+        List<BoardDTO> result = new ArrayList();
+
         //list.add(data);
         //list.add(cData);
 
 
-        return new ApiResponse(true, data1);
+        return new ApiResponse(true, list);
     }
 
     // Board테이블의 isDel 컬럼의 데이터를 'Y' 로 업데이트
