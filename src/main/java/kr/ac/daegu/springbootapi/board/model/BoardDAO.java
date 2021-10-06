@@ -22,6 +22,8 @@ public interface BoardDAO {
      BoardDTO getBoardById2(int id);
      List<CommentDTO> comments(int id);
 
+    BoardDTO getBoardByIdOri(int id);
+
     //List<BoardDTO> getBoardById2(int id);
 }
 

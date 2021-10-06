@@ -82,20 +82,27 @@ public class BoardService {
         // List<CommentDTO> cData = boardDAO.comments(id);
 //      BoardDTO data1 = boardDAO.getBoardById2(id);
         //List<BoardDTO> data1 = boardDAO.getBoardById2(id);
-        ArrayList list = new ArrayList();
-//        list.add("author :"+data.getAuthor());
-  //      list.add("subject :"+data.getSubject());
-    //    list.add("content :"+data.getContent());
+        String isDel1 = boardDAO.getBoardByIdOri(id).getIsDel();
+        log.debug("hihihihifdsa :: " + isDel1);
+        if(isDel1.equals("Y")){
+            return new ApiResponse(false,"board id "+ id +" is already deleted");
+        }else {
+            ArrayList list = new ArrayList();
+            list.add("id : " + data.getId());
+            list.add("author : " + data.getAuthor());
+            list.add("subject : " + data.getSubject());
+            list.add("content : " + data.getContent());
+            list.add(cData);
 
-        list.add(data);
-        list.add(cData);
-        List<BoardDTO> result = new ArrayList();
 
-        //list.add(data);
-        //list.add(cData);
+            List<BoardDTO> result = new ArrayList();
+
+            //list.add(data);
+            //list.add(cData);
 
 
-        return new ApiResponse(true, list);
+            return new ApiResponse(true, list);
+        }
     }
 
     // Board테이블의 isDel 컬럼의 데이터를 'Y' 로 업데이트

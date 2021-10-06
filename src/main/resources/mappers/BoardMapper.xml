@@ -39,7 +39,10 @@
     </update>
 
 
-
+    <select id="getBoardByIdOri" parameterType="int" resultType="kr.ac.daegu.springbootapi.board.model.BoardDTO">
+        SELECT * from Board
+        WHERE id = #{id}
+    </select>
 
 </mapper>
 

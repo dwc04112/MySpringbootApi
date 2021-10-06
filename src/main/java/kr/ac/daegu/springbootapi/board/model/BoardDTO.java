@@ -28,6 +28,7 @@ public class BoardDTO {
     private int replyRootId;
     private int depth;
     private int orderNum;
+    private String isDel;
  //   private List<CommentDTO> commentList1;
 
 
