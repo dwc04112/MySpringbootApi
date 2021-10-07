@@ -54,7 +54,6 @@ public class CommentService {
  */
     public ApiResponse<CommentDTO> postComment(CommentDTO commentDTO)throws Exception {
 
-
         int pass2 = commentDAO.countBoard(commentDTO.getId());
         log.debug("postComment id2 ::: " +pass2);
         if(pass2==0){
