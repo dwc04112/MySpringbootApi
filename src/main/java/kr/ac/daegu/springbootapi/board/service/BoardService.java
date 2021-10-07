@@ -78,33 +78,21 @@ public class BoardService {
     public ApiResponse<BoardDTO> getBoardById(int id) {
         BoardDTO data = boardDAO.getBoardById(id);
         List<CommentDTO> cData = boardDAO.getBoardComment(id);
-        // List<CommentDTO> cData = boardDAO.comments(id);
-//      BoardDTO data1 = boardDAO.getBoardById2(id);
-        //List<BoardDTO> data1 = boardDAO.getBoardById2(id);
         String isDel1 = boardDAO.getBoardByIdOri(id).getIsDel();
-        log.debug("hihihihifdsa :: " + isDel1);
         if(isDel1.equals("Y")){
             return new ApiResponse(false,"board id "+ id +" is already deleted");
         }else {
-     //       ArrayList list = new ArrayList();
-    //        list.add("id : " + data.getId());
-    //        list.add("author : " + data.getAuthor());
-    //        list.add("subject : " + data.getSubject());
-    //        list.add("content : " + data.getContent());
-            //list.add(data);
-            //list.add(cData);
+            data.setComments(cData);
 
             LinkedHashMap<String,Object> member = new LinkedHashMap<>();
             member.put("id",data.getId());
             member.put("author",data.getAuthor());
             member.put("subject",data.getSubject());
             member.put("content",data.getContent());
-            member.put("contents",cData);
-
-
-
+            member.put("comments",cData);
 
             return new ApiResponse(true, member);
+            //return new ApiResponse(true, data);
         }
     }
 

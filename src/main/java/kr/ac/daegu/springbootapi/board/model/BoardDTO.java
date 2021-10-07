@@ -3,6 +3,7 @@ package kr.ac.daegu.springbootapi.board.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 
@@ -11,7 +12,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 public class BoardDTO {
@@ -29,7 +30,7 @@ public class BoardDTO {
     private int depth;
     private int orderNum;
     private String isDel;
- //   private List<CommentDTO> commentList1;
+    private List<CommentDTO> comments = null;
 
 
     @Override
@@ -49,7 +50,7 @@ public class BoardDTO {
                     ", replyRootId=" + replyRootId +
                     ", depth=" + depth +
                     ", orderNum=" + orderNum +
-          //          ", commentList=" + commentList1 +
+                    ", comments=" + comments +
                     '}';
 
 

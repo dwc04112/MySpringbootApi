@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +61,8 @@ public class CommentService {
         if(pass2==0){
             return new ApiResponse (false, "id value is not exists in board",null);
         }else{
+            commentDTO.setWriteDate(LocalDate.now());
+            commentDTO.setWriteTime(LocalTime.now());
             int result = commentDAO.postComment(commentDTO);
             if(result > 0){
                 return new ApiResponse(true,"Success to post comment in board id : "+commentDTO.getId(),commentDTO);
