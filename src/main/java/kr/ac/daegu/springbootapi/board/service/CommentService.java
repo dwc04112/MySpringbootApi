@@ -61,7 +61,7 @@ public class CommentService {
         }else{
             int result = commentDAO.postComment(commentDTO);
             if(result > 0){
-                return new ApiResponse(true,"Success to post comment in board id : "+commentDTO.getId());
+                return new ApiResponse(true,"Success to post comment in board id : "+commentDTO.getId(),commentDTO);
             }else{
                 throw new Exception("Falied to post comment in board");
             }

@@ -86,12 +86,13 @@ public class BoardService {
         if(isDel1.equals("Y")){
             return new ApiResponse(false,"board id "+ id +" is already deleted");
         }else {
-            ArrayList list = new ArrayList();
+     //       ArrayList list = new ArrayList();
     //        list.add("id : " + data.getId());
     //        list.add("author : " + data.getAuthor());
     //        list.add("subject : " + data.getSubject());
     //        list.add("content : " + data.getContent());
-
+            //list.add(data);
+            //list.add(cData);
 
             LinkedHashMap<String,Object> member = new LinkedHashMap<>();
             member.put("id",data.getId());
@@ -99,10 +100,8 @@ public class BoardService {
             member.put("subject",data.getSubject());
             member.put("content",data.getContent());
             member.put("contents",cData);
-            List<BoardDTO> result = new ArrayList();
 
-            //list.add(data);
-            //list.add(cData);
+
 
 
             return new ApiResponse(true, member);
