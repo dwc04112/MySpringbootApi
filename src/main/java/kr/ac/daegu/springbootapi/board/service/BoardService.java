@@ -43,7 +43,7 @@ public class BoardService {
     }
 
 
-        //id 해당 글 불러와서 글 수정
+        //id 해당 글 불러와서 글 수정 (git 수정되나?)
         //author(없으면 그대로),
         //subject(없으면 그대로),
         //content(없으면 그대로),
