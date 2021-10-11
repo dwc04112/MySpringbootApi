@@ -27,7 +27,7 @@
         WHERE id = #{id} and isDel = 'N'
     </select>
     <!-- 2번 수행하기 위해 comment 데이터 -->
-    <select id="getBoardComment" parameterType="int" resultType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
+    <select id="getBoardComment" parameterType="int" resultType="kr.ac.daegu.springbootapi.comment.model.CommentDTO">
         select * from comment where id=#{id}
     </select>
 

@@ -1,4 +1,5 @@
 package kr.ac.daegu.springbootapi.board.model;
+import kr.ac.daegu.springbootapi.comment.model.CommentDTO;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 

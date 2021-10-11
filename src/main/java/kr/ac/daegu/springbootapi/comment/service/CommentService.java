@@ -1,11 +1,9 @@
-package kr.ac.daegu.springbootapi.board.service;
+package kr.ac.daegu.springbootapi.comment.service;
 
 
 
-import kr.ac.daegu.springbootapi.board.model.BoardDAO;
-import kr.ac.daegu.springbootapi.board.model.BoardDTO;
-import kr.ac.daegu.springbootapi.board.model.CommentDAO;
-import kr.ac.daegu.springbootapi.board.model.CommentDTO;
+import kr.ac.daegu.springbootapi.comment.model.CommentDAO;
+import kr.ac.daegu.springbootapi.comment.model.CommentDTO;
 import kr.ac.daegu.springbootapi.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor

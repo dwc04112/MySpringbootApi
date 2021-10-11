@@ -1,4 +1,4 @@
-package kr.ac.daegu.springbootapi.board.model;
+package kr.ac.daegu.springbootapi.comment.model;
 
 import org.springframework.stereotype.Repository;
 

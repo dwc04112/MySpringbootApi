@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.ac.daegu.springbootapi.board.model.CommentDAO">
-    <select id="getCommentList" resultType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
+<mapper namespace="kr.ac.daegu.springbootapi.comment.model.CommentDAO">
+    <select id="getCommentList" resultType="kr.ac.daegu.springbootapi.comment.model.CommentDTO">
         select * from Comment
     </select>
 
-    <select id="getCommentById" resultType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
+    <select id="getCommentById" resultType="kr.ac.daegu.springbootapi.comment.model.CommentDTO">
        <!-- select * from board b , comment c where b.id =c.id and c.id=? -->
         select * from comment where id=#{id}
     </select>
 
 
-    <insert id="postComment" parameterType="kr.ac.daegu.springbootapi.board.model.CommentDTO">
+    <insert id="postComment" parameterType="kr.ac.daegu.springbootapi.comment.model.CommentDTO">
         insert into comment (id,author,content,writeDate,writeTime)
         values (#{id}, #{author}, #{content}, CURDATE(), CURTIME())
     </insert>

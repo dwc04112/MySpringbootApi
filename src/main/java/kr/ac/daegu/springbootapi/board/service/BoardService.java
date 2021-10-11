@@ -4,7 +4,7 @@ package kr.ac.daegu.springbootapi.board.service;
 
 import kr.ac.daegu.springbootapi.board.model.BoardDAO;
 import kr.ac.daegu.springbootapi.board.model.BoardDTO;
-import kr.ac.daegu.springbootapi.board.model.CommentDTO;
+import kr.ac.daegu.springbootapi.comment.model.CommentDTO;
 import kr.ac.daegu.springbootapi.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +20,7 @@ import java.util.*;
 public class BoardService {
 
     public final BoardDAO boardDAO;
+
 
 
 
@@ -78,8 +79,7 @@ public class BoardService {
         if(isDel1.equals("Y")){
             return new ApiResponse(false,"board id "+ id +" is already deleted");
         }else {
-            data.setComments(cData);
-
+            // data.setComments(cData);
             LinkedHashMap<String,Object> member = new LinkedHashMap<>();
             member.put("id",data.getId());
             member.put("author",data.getAuthor());

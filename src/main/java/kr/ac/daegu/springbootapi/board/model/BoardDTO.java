@@ -1,6 +1,7 @@
 package kr.ac.daegu.springbootapi.board.model;
 
 
+import kr.ac.daegu.springbootapi.comment.model.CommentDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

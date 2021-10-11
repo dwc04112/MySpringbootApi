@@ -1,15 +1,12 @@
-package kr.ac.daegu.springbootapi.board.controller;
+package kr.ac.daegu.springbootapi.comment.controller;
 
-import kr.ac.daegu.springbootapi.board.model.BoardDTO;
-import kr.ac.daegu.springbootapi.board.model.CommentDTO;
-import kr.ac.daegu.springbootapi.board.service.BoardService;
-import kr.ac.daegu.springbootapi.board.service.CommentService;
+import kr.ac.daegu.springbootapi.comment.model.CommentDTO;
+import kr.ac.daegu.springbootapi.comment.service.CommentService;
 import kr.ac.daegu.springbootapi.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
