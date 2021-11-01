@@ -6,6 +6,7 @@ import kr.ac.daegu.springbootapi.boardjpa.service.BoardJpaService;
 import kr.ac.daegu.springbootapi.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +20,8 @@ public class BoardJpaController {
     public final BoardJpaService boardJpaService;
 
     @GetMapping(value = "/")
-    public ApiResponse<BoardDTO> getBoardList(){
-        List<Board> list = boardJpaService.getBoardList();
+    public ApiResponse<BoardDTO> getBoardList(@RequestParam int page, @RequestParam int size){
+        Page<Board> list = boardJpaService.getBoardList(page, size);
         return new ApiResponse(true, list);
     }
 
