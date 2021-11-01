@@ -65,8 +65,11 @@ public class BoardJpaService {
 
     public ApiResponse<BoardDTO> updateIsDelBoard(int id, BoardDTO boardDTO) {
         // 비밀번호 일치 확인
-        Board oriPass = boardRepository.getBoardById(id);
-        boolean isPwdMatch = oriPass.getPassword().equals(boardDTO.getPassword());
+        Optional<Board> oriPass = boardRepository.findBoardById(id);
+        // 위 oriPass 가 null 이면 RuntimeException 발생시키고 메소드 종료.
+        Board data = oriPass.orElseThrow(() -> new RuntimeException("no data"));
+        // 비번 일치하지 않으면?
+        boolean isPwdMatch = data.getPassword().equals(boardDTO.getPassword());
         if (!isPwdMatch){
             return new ApiResponse<>(false, "board password is not match, please check requested board password");
         }
