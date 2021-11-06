@@ -115,6 +115,7 @@ public class BoardJpaService {
     @Transactional
     public ApiResponse<BoardDTO> postReply(BoardDTO dto) {
         /* JPQL TEST 겸 원글 불러오기 */
+
         Board b = boardRepository.selectBoard(dto.getId());
         if(b == null){
             return new ApiResponse(false, "board id " + dto.getReplyRootId() + " is null");
@@ -145,8 +146,10 @@ public class BoardJpaService {
         String newSubject = appendPrefixString("RE : ", depth, dto.getSubject());
         /* depth와 orderNum을 정하는 로직 END */
 
+        int newBoardIdValue = this.getNewBoardIdValue(boardRepository);
         /* 새로운 답글 컨텐츠 추가 */
         Board newB = Board.builder()
+                .id(newBoardIdValue)
                 .subject(newSubject)
                 .author(dto.getAuthor())
                 .content(dto.getContent())

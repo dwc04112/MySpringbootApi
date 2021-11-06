@@ -65,6 +65,9 @@ public class BoardJpaController {
     // mission 답글 쓰기를 담당하는 기능 구현.
     @PostMapping(value = "/reply")
     public ApiResponse<BoardDTO> postBoardReplyContent(@RequestBody BoardDTO boardDTO){
+        if(boardDTO.getDepth()>=2){
+            return new ApiResponse<>(false,"The maximum value cannot exceed 3", null);
+        }
         return boardJpaService.postReply(boardDTO);
     }
 
