@@ -15,6 +15,14 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     List<Board> findAll();
     Page<Board> findBoardsByIsDel(String isDel, Pageable pageable);
     Page<Board> findBoardsByIsDelOrderByReplyRootIdDescOrderNumAsc(String isDel, Pageable pageable);
+
+    Page<Board> findBoardByIsDelAndAuthorLikeOrderByReplyRootIdDescOrderNumAsc(String isDel, String svalue, Pageable pageable);
+
+    Page<Board> findBoardByIsDelAndSubjectLikeOrderByReplyRootIdDescOrderNumAsc(String isDel, String svalue, Pageable pageable);
+
+    Page<Board> findBoardByIsDelAndContentLikeOrderByReplyRootIdDescOrderNumAsc(String isDel, String svalue, Pageable pageable);
+
+
     Optional<Board> findBoardById(int id);
 
     // JPQL != SQL

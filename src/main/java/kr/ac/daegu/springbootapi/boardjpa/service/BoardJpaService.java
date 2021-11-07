@@ -22,14 +22,39 @@ public class BoardJpaService {
 
     public final BoardRepository boardRepository;
 
-    public Page<Board> getBoardList(int page, int size) {
+    public Page<Board> getBoardList(int page, int size, String stype, String svalue) {
         // 숙제 2 : jpa queryMethod를 수정하여 isDel이 "N"인 데이터row들만 나오도록 수정
         PageRequest pageRequest = PageRequest.of(page, size);
         // 페이지네이션 + 정렬조건 + 다른 개발자 부여 조건 하여 List하는 여러 방법들..
         // https://dar0m.tistory.com/61
 //        return boardRepository.findBoardsByIsDel("N", pageRequest);
+        if(svalue==null){
+            log.debug("여기는 null");
+            return boardRepository.findBoardsByIsDelOrderByReplyRootIdDescOrderNumAsc("N", pageRequest);
+        }
         // 그외 쿼리메소드로 작성하여 바로 적용.
-        return boardRepository.findBoardsByIsDelOrderByReplyRootIdDescOrderNumAsc("N", pageRequest);
+        String svalue2 = "%"+svalue+"%";
+        switch (stype){
+            case "author":
+                return boardRepository.findBoardByIsDelAndAuthorLikeOrderByReplyRootIdDescOrderNumAsc("N",svalue2,pageRequest);
+            case "subject":
+                log.debug("1: "+stype +" 2: "+svalue);
+                return boardRepository.findBoardByIsDelAndSubjectLikeOrderByReplyRootIdDescOrderNumAsc("N",svalue2,pageRequest);
+            case "content":
+                return boardRepository.findBoardByIsDelAndContentLikeOrderByReplyRootIdDescOrderNumAsc("N",svalue2,pageRequest);
+            default:
+                return null;
+        }
+
+
+/*
+        if(stype.equals("author")){
+            log.debug("여기는 author, value = " + svalue);
+            return boardRepository.findBoardByIsDelAndAuthorLikeOrderByReplyRootIdDescOrderNumAsc("N",svalue,pageRequest);
+        }
+
+ */
+
     }
 
     public Board getBoardById(Integer id) {

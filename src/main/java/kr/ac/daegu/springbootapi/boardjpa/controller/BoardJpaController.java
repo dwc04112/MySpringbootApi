@@ -6,6 +6,7 @@ import kr.ac.daegu.springbootapi.boardjpa.service.BoardJpaService;
 import kr.ac.daegu.springbootapi.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +22,13 @@ public class BoardJpaController {
     public final BoardJpaService boardJpaService;
 
     @GetMapping(value = "/")
-    public ApiResponse<BoardDTO> getBoardList(@RequestParam int page, @RequestParam int size){
-        Page<Board> list = boardJpaService.getBoardList(page, size);
+    public ApiResponse<BoardDTO> getBoardList(@RequestParam int page, @RequestParam int size,
+                                              @RequestParam(required = false) String stype , @RequestParam(required = false) String svalue){
+        log.debug("검색 값 "+stype+" 그리고 " +svalue);
+        Page<Board> list = boardJpaService.getBoardList(page, size, stype ,svalue);
         return new ApiResponse(true, list);
     }
+
 
     @GetMapping(value = "/{id}") // PathVariable
     public ApiResponse<BoardDTO> getBoardById(@PathVariable Integer id){
