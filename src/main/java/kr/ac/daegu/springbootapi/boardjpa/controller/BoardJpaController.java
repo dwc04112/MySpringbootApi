@@ -21,6 +21,11 @@ public class BoardJpaController {
 
     public final BoardJpaService boardJpaService;
 
+    @GetMapping("/hello")
+    public String hello(){
+        return "hello";
+    }
+
     @GetMapping(value = "/")
     public ApiResponse<BoardDTO> getBoardList(@RequestParam int page, @RequestParam int size,
                                               @RequestParam(required = false) String stype , @RequestParam(required = false) String svalue){
