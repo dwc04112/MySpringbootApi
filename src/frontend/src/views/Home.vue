@@ -1,8 +1,5 @@
 <template>
   <v-container grid-list-md>
-    <div>
-      <router-link to="/board">board</router-link>
-    </div>
     <v-text-field v-model="search" label="검색창" single-line></v-text-field>
     <v-layout row wrap>
       <v-flex xs12>
@@ -42,6 +39,9 @@ export default {
     subject: 'hi',
     loading: false,
     search: '',
+
+
+
     headers: [
       { text: '번호', value: 'id', sortable: true},
       { text: '제목', value: 'subject', sortable: true },
@@ -55,15 +55,22 @@ export default {
     board
   },
 
+
   methods: {
     retrieveUsers(){
-      this.$axios.get("boardjpa/list")
+      this.$axios.get("boardjpa/list",{
+        headers:{
+          Authorization : "Bearer "+ this.$store.state.userStore.token
+        }
+      })
           .then(response=>{
+            console.log(response.status);
             this.users = response.data;
             console.log(response.data);
           })
-          .catch(e=>{
-            console.log(e);
+          .catch(error =>{
+            console.log(error.response);
+            this.$store.commit('loginCheck',error.response.status)
           })
     },
     inView(id){

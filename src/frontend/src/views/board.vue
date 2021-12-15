@@ -5,7 +5,8 @@
   >
     <v-card-text  v-for="user in users" v-bind:key="user.id">
       <div>{{user.writeDate}}</div>
-      <p class="text-h4 text--primary">
+      <div>작성자 : {{user.author}}</div>
+      <p class="text-h5 text--primary">
         {{user.subject}}
       </p>
       <div class="text--primary" >
@@ -16,7 +17,7 @@
       <v-btn
           text
           color="teal accent-4"
-          @click="reveal = true"
+          @click="pageLink"
       >
         Home
       </v-btn>
@@ -44,14 +45,23 @@ export default {
   methods: {
     detailUsers() {
       let data = this.$route.query.id
-      this.$axios.get("board/"+data).then(response => {
-        this.users = response.data;
-        console.log(response.data);
-      })
-          .catch(e => {
-            console.log(e);
-          })
-    }
+      this.$axios.get("boardjpa/"+ data,{
+        headers:{
+          Authorization : "Bearer "+ this.$store.state.userStore.token
+        }
+      }
+        ).then(response => {
+          this.users = response.data;
+          console.log(response.data);
+        })
+        .catch(error =>{
+          console.log(error.response);
+          this.$store.commit('loginCheck',error.response.status)
+        })
+    },
+    pageLink(){
+      this.$router.push({path:'/'})
+    },
   },
   mounted() {
     this.detailUsers();

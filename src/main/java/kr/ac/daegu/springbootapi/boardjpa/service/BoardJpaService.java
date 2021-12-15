@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -21,6 +22,14 @@ import java.util.Optional;
 public class BoardJpaService {
 
     public final BoardRepository boardRepository;
+
+    public List<Board> getBoardListVue() {
+        return boardRepository.findBoardByIsDel("N");
+    }
+    public List<Board> getBoardById2(int id) {
+        return boardRepository.findBoardByIdAndIsDel(id,"N");
+    }
+
 
     public Page<Board> getBoardList(int page, int size, String stype, String svalue) {
         // 숙제 2 : jpa queryMethod를 수정하여 isDel이 "N"인 데이터row들만 나오도록 수정
@@ -67,6 +76,7 @@ public class BoardJpaService {
 //        }
         return board.orElse(null);
     }
+
 
     public Board postBoard(BoardDTO boardDTO) {
         log.debug("author="+boardDTO.getAuthor());
@@ -136,7 +146,6 @@ public class BoardJpaService {
             return new ApiResponse(false, "failed to delete board id " + id);
         }
     }
-
     @Transactional
     public ApiResponse<BoardDTO> postReply(BoardDTO dto) {
         /* JPQL TEST 겸 원글 불러오기 */
@@ -209,4 +218,6 @@ public class BoardJpaService {
         builder.append(target);
         return builder.toString();
     }
+
+
 }

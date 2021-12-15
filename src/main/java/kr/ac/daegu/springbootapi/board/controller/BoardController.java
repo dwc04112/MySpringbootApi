@@ -17,6 +17,8 @@ public class BoardController {
 
     public final BoardService boardService;
 
+
+
     @GetMapping(value = "/")
     public ApiResponse<BoardDTO> getBoardList(){
         List<BoardDTO> list = boardService.getBoardList();

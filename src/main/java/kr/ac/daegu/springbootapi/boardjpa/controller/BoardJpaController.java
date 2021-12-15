@@ -6,12 +6,10 @@ import kr.ac.daegu.springbootapi.boardjpa.service.BoardJpaService;
 import kr.ac.daegu.springbootapi.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +24,15 @@ public class BoardJpaController {
         return "hello";
     }
 
+    @GetMapping(value = "/list")
+    public List<Board> SelectList(){
+        return boardJpaService.getBoardListVue();
+    }
+    @GetMapping(value = "/{id}")
+    public List<Board> SelectListid(@PathVariable int id){
+        return boardJpaService.getBoardById2(id);
+    }
+
     @GetMapping(value = "/")
     public ApiResponse<BoardDTO> getBoardList(@RequestParam int page, @RequestParam int size,
                                               @RequestParam(required = false) String stype , @RequestParam(required = false) String svalue){
@@ -34,13 +41,16 @@ public class BoardJpaController {
         return new ApiResponse(true, list);
     }
 
-
+/*
     @GetMapping(value = "/{id}") // PathVariable
     public ApiResponse<BoardDTO> getBoardById(@PathVariable Integer id){
+        log.debug("hihi id : " + id);
         Board data = boardJpaService.getBoardById(id);
         return new ApiResponse(true, data);
     }
 
+
+ */
     @PostMapping(value = "/")
     public ApiResponse<BoardDTO> postBoard(@RequestBody BoardDTO boardDTO){
         log.debug("author="+boardDTO.getAuthor());
