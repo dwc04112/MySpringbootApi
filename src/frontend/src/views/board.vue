@@ -45,22 +45,17 @@ export default {
   methods: {
     detailUsers() {
       let data = this.$route.query.id
-      this.$axios.get("boardjpa/"+ data,{
-        headers:{
-          Authorization : "Bearer "+ this.$store.state.userStore.token
-        }
-      }
-        ).then(response => {
+      this.$axios.get("boardjpa/"+ data,)
+        .then(response => {
           this.users = response.data;
           console.log(response.data);
         })
         .catch(error =>{
           console.log(error.response);
-          this.$store.commit('loginCheck',error.response.status)
         })
     },
     pageLink(){
-      this.$router.push({path:'/'})
+      this.$router.push({path:'/home'})
     },
   },
   mounted() {

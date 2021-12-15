@@ -58,19 +58,13 @@ export default {
 
   methods: {
     retrieveUsers(){
-      this.$axios.get("boardjpa/list",{
-        headers:{
-          Authorization : "Bearer "+ this.$store.state.userStore.token
-        }
-      })
+      this.$axios.get("boardjpa/list",)
           .then(response=>{
-            console.log(response.status);
             this.users = response.data;
             console.log(response.data);
           })
           .catch(error =>{
             console.log(error.response);
-            this.$store.commit('loginCheck',error.response.status)
           })
     },
     inView(id){
