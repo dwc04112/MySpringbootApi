@@ -37,6 +37,22 @@
                         Login
                       </v-btn >
                     </v-card-actions>
+                    <v-card-actions>
+                      <v-btn
+                          text
+                          color="teal accent-6"
+                          @click="signLink"
+                      >
+                        Sign-Up
+                      </v-btn>
+                      <v-btn
+                          text
+                          color="teal accent-6"
+                          @click="reveal = true"
+                      >
+                        Edit
+                      </v-btn>
+                    </v-card-actions>
                   </v-form>
                 </v-col>
               </v-row>
@@ -92,6 +108,9 @@ export default {
         alert("아이디 혹은 비밀번호가 입력되지 않았습니다")
       }
       },
+    signLink(){
+      this.$router.push({path:'/sign'})
+    },
   },
 
 

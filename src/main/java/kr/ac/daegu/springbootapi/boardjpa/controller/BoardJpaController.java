@@ -28,6 +28,7 @@ public class BoardJpaController {
     public List<Board> SelectList(){
         return boardJpaService.getBoardListVue();
     }
+
     @GetMapping(value = "/{id}")
     public List<Board> SelectListid(@PathVariable int id){
         return boardJpaService.getBoardById2(id);

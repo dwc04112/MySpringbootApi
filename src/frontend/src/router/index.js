@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import board from "@/views/board";
 import Login from "@/views/Login";
+import Sign from "@/views/Sign";
 
 Vue.use(VueRouter)
 
@@ -29,7 +30,12 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home
-  }
+  },
+  {
+    path: '/sign',
+    name: 'Sign',
+    component: Sign
+  },
 ]
 
 const router = new VueRouter({
