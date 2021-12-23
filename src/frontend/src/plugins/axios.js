@@ -1,10 +1,16 @@
 import axios from 'axios';
 import {store} from "@/store";
 
+
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
     // Do something before request is sent
     console.log('request interceptor!!!!')
+
+    if(document.URL.match("signup")){
+        console.log("인증이 필요없는 url : " + document.URL)
+        return config;
+    }
     config.headers.Authorization = "Bearer "+store.state.userStore.token;
     return config;
 }, function (error) {

@@ -109,7 +109,7 @@ export default {
       }
       },
     signLink(){
-      this.$router.push({path:'/sign'})
+      this.$router.push({path:'/signup'})
     },
   },
 

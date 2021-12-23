@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import board from "@/views/board";
 import Login from "@/views/Login";
-import Sign from "@/views/Sign";
+import signup from "@/views/signup";
 
 Vue.use(VueRouter)
 
@@ -32,9 +32,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/sign',
-    name: 'Sign',
-    component: Sign
+    path: '/signup',
+    name: 'signup',
+    component: signup
   },
 ]
 

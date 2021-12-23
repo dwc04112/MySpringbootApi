@@ -27,6 +27,7 @@ public class MemberController {
 
     @PostMapping("signup/doublecheck")
     public Integer doubleCheck(@RequestBody MemberDto memberDto){
+        log.debug("닉네임? : "+ memberDto.getNickname());
         String nick = memberDto.getNickname();
         return check(nick);
         //중복확인

@@ -46,7 +46,7 @@
           </v-col>
         </v-row>
 
-        <v-row style="margin-top: 3%; margin-right: 30px; margin-left: 30px">
+        <v-row style="margin-top: 0%; margin-right: 30px; margin-left: 30px">
           <v-col>
             <div style="float: left; width: 30%;">
               <v-text-field
@@ -72,6 +72,28 @@
           </v-col>
         </v-row>
 
+        <v-row style="margin-top: 0%; margin-right: 30px; margin-left: 30px">
+          <v-col>
+            <div style="float: left; width: 30%;">
+              <v-text-field
+                  placeholder="닉네임"
+                  v-model="nickname"
+                  type="text"
+                  required >
+              </v-text-field>
+            </div>
+            <div style="float: left; margin-top: 2%; width: 20%; margin-left: 2%">
+              <v-btn
+                  text
+                  color="yellow"
+                  @click="doubleCheck"
+              >
+                중복확인
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
+
         <v-card-actions>
           <v-btn text style="margin-top: 2%">
             Next
@@ -84,7 +106,7 @@
 
 <script>
 export default {
-  name: "Sign",
+  name: "signup",
   data () {
     return {
       firstName: '',
@@ -93,6 +115,8 @@ export default {
       password: '',
       passwordCheck:'',
       placeholder:'',
+      checkNum: '', //닉네임 중복값 -> 1이면 중복, 0이면 중복x
+      nickname: '',
     }
   },
   methods: {
@@ -104,6 +128,29 @@ export default {
       }else{
         this.placeholder="비밀번호가 일치합니다";
       }
+    },
+
+    doubleCheck(){
+      let saveData = {};
+      saveData.nickname = this.nickname;
+
+      this.$axios.post("signup/doublecheck",JSON.stringify(saveData),{
+        headers: {
+          "Content-Type": `application/json`,
+        },
+      })
+          .then(response=>{
+            this.checkNum = response.data;
+            if(this.checkNum===0){
+              alert("사용가능한 닉네임 입니다")
+            }else{
+              alert("중복된 닉네임 입니다")
+            }
+            console.log(response.data);
+          })
+          .catch(error =>{
+            console.log(error.response);
+          })
     }
   }
 }
