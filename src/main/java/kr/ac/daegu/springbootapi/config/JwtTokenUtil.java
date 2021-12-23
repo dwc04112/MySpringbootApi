@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class JwtTokenUtil {
     private static final String secret = "jwtpassword";
 
-    public static final long JWT_TOKEN_VALIDITY_HOUR = 5*60*1000;//5 * 60 * 60 * 1000; // 5 hours
+    public static final long JWT_TOKEN_VALIDITY_HOUR = 30*1000;//5 * 60 * 60 * 1000; // 5 hours
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getId);

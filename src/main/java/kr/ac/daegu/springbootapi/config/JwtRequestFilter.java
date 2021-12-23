@@ -17,9 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Component
 @Slf4j
@@ -29,11 +27,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
 
     private static final List<String> EXCLUDE_URL =
-        Collections.unmodifiableList(
-            Arrays.asList(
-                    "/api/member",
-                    "/authenticate"
-            ));
+            Collections.unmodifiableList(
+                    Arrays.asList(
+                            "/api/member",
+                            "/authenticate",
+                            "/signup/**"
+                    ));
 
     public JwtRequestFilter(JwtUserDetailsService jwtUserDetailsService, JwtTokenUtil jwtTokenUtil) {
         this.jwtUserDetailsService = jwtUserDetailsService;
@@ -78,6 +77,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+
         return EXCLUDE_URL.stream().anyMatch(exclude -> exclude.equalsIgnoreCase(request.getServletPath()));
     }
 }
