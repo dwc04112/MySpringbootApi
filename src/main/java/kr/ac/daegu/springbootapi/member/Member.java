@@ -18,17 +18,19 @@ public class Member {
     @Column(unique = true)
     private String email;
     private String password;
-    private String name;
-    private String nickname;
+    private String firstName;
+    private String lastName;
+    private String nickName;
 
-    public Member(String email, String password, String name, String nickname) {
+    public Member(String email, String password, String firstName, String lastName, String nickName) {
         this.email = email;
         this.password = password;
-        this.name = name;
-        this.nickname = nickname;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nickName = nickName;
     }
 
-    public static Member createMember(String email, String password, String name, String nickname){
-        return new Member(email, password, name, nickname);
+    public static Member createMember(String email, String password, String firstName,String lastName, String nickName){
+        return new Member(email, password, firstName, lastName, nickName);
     }
 }

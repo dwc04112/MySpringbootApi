@@ -10,8 +10,9 @@ import java.util.Optional;
 public interface MemberRepository extends CrudRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
 
-    @Query("SELECT count (m.nickname) FROM Member m where m.nickname=?1")
-    Integer getMemberByNickname(String nickname);
+    @Query("SELECT count (m.nickName) FROM Member m where m.nickName=?1")
+    Integer getMemberByNickname(String nickName);
 
-
+    @Query("select m.firstName, m.lastName, m.nickName from Member m where m.email =?1")
+    String getMemberByEmail(String email);
 }

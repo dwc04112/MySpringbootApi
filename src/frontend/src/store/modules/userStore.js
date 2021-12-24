@@ -4,7 +4,10 @@ const userStore = {
     state: {
         email: '',
         // userName: '',
-        token: ''
+        token: '',
+        nickName: '',
+        firstName: '',
+        lastName: '',
     },
     mutations: {
         login: function (state, payload) {
@@ -12,6 +15,7 @@ const userStore = {
             // state.userName = payload.userName
             state.token = payload.token
             console.log("after token? : " + state.token)
+
         },
         loginCheck: function (state, payload) {
             console.log("hihi" + payload)
@@ -25,8 +29,9 @@ const userStore = {
                     console.log(error)
                 })
             }
-        }
-    }
+        },
+
+    },
 }
 export default userStore
 

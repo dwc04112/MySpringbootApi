@@ -26,7 +26,7 @@
             <div style="float: left; width: 40%; margin-left: 5%">
               <v-text-field
                   placeholder="이름"
-                  v-model="LastName"
+                  v-model="lastName"
                   required >
               </v-text-field>
             </div>
@@ -39,7 +39,7 @@
             <div style="float: left; width: 65%;">
               <v-text-field
                   placeholder="Email"
-                  v-model="Email"
+                  v-model="email"
                   required >
               </v-text-field>
             </div>
@@ -77,7 +77,7 @@
             <div style="float: left; width: 30%;">
               <v-text-field
                   placeholder="닉네임"
-                  v-model="nickname"
+                  v-model="nickName"
                   type="text"
                   required >
               </v-text-field>
@@ -88,15 +88,19 @@
                   color="yellow"
                   @click="doubleCheck"
               >
-                중복확인
+                중복확인{{checkNum}}
               </v-btn>
             </div>
           </v-col>
         </v-row>
 
         <v-card-actions>
-          <v-btn text style="margin-top: 2%">
-            Next
+          <v-btn
+              text
+              style="margin-top: 2%"
+              @click="signCommit"
+          >
+            회원가입
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -110,13 +114,16 @@ export default {
   data () {
     return {
       firstName: '',
-      LastName: '',
-      Email: '',
+      lastName: '',
+      email: '',
+
       password: '',
       passwordCheck:'',
       placeholder:'',
+      passCheckNum:1, // 비밀번호 틀리면 -> 1 , 0이면 pass
+
       checkNum: '', //닉네임 중복값 -> 1이면 중복, 0이면 중복x
-      nickname: '',
+      nickName: '',
     }
   },
   methods: {
@@ -124,15 +131,17 @@ export default {
       if(this.passwordCheck===""||null||undefined||NaN){
         this.placeholder = ""
       }else if(this.password!==this.passwordCheck){
-        this.placeholder = "비밀번호가 틀렸습니다"
+        this.placeholder = "비밀번호가 틀렸습니다";
+        this.passCheckNum = 1;
       }else{
         this.placeholder="비밀번호가 일치합니다";
+        this.passCheckNum = 0;
       }
     },
 
     doubleCheck(){
       let saveData = {};
-      saveData.nickname = this.nickname;
+      saveData.nickName = this.nickName;
 
       this.$axios.post("signup/doublecheck",JSON.stringify(saveData),{
         headers: {
@@ -151,6 +160,53 @@ export default {
           .catch(error =>{
             console.log(error.response);
           })
+    },
+
+    signCommit(){
+      if(this.passCheckNum===1){
+        alert("비밀번호를 확인해주세요")
+        return null;
+      }
+      if(this.checkNum===1){
+        alert("닉네임을 확인해주세요")
+        return null;
+      }
+      let saveUser = {};
+        saveUser.email = this.email;
+        saveUser.firstName = this.firstName;
+        saveUser.lastName = this.lastName;
+
+        saveUser.password = this.password;
+        saveUser.nickName = this.nickName;
+      alert("데이터 : " + saveUser.nickName + saveUser.email + saveUser.password)
+      try {
+        this.$axios.post("/api/member", JSON.stringify(saveUser), {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        })
+            .then((response) => {
+              if (response.status === 200) {
+                alert("회원가입이 완료되었습니다. 로그인 화면으로 돌아갑니다")
+                this.$router.push({path: './login'});
+              }
+            })
+            .catch(error =>{
+              console.log(error.response);
+              if(error.response.status===401){
+                alert("회원가입 오류. 다시한번 회원가입을 진행해주세요");
+                this.password = null;
+                this.passwordCheck = null;
+                this.email = null;
+                this.firstName = null;
+                this.lastName = null;
+                this.passCheckNum = 1;
+                this.checkNum = 1;
+              }
+            });
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 }

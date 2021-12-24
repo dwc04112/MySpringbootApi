@@ -89,7 +89,9 @@ export default {
           })
               .then((response) => {
                 if (response.status === 200) {
-                  alert("로그인 성공")
+
+               
+
                   this.$store.commit('login', response.data)
                   this.$router.push({path: './home'});
                 }
