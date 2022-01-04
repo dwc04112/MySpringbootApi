@@ -178,7 +178,6 @@ export default {
 
         saveUser.password = this.password;
         saveUser.nickName = this.nickName;
-      alert("데이터 : " + saveUser.nickName + saveUser.email + saveUser.password)
       try {
         this.$axios.post("/api/member", JSON.stringify(saveUser), {
           headers: {
@@ -188,7 +187,7 @@ export default {
             .then((response) => {
               if (response.status === 200) {
                 alert("회원가입이 완료되었습니다. 로그인 화면으로 돌아갑니다")
-                this.$router.push({path: './login'});
+                this.$router.push({path: './'});
               }
             })
             .catch(error =>{

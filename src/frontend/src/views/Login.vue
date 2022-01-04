@@ -67,11 +67,13 @@
 
 
 <script>
+
 export default {
   data () {
     return {
-      email: '',
-      password: '',
+      email: 'test@gmail.com',
+      password: '1234',
+      userInfoData:[],
     }
   },
 
@@ -89,10 +91,11 @@ export default {
           })
               .then((response) => {
                 if (response.status === 200) {
+                  alert("로그인 성공")
 
-               
+                  // this.$store.commit('login', response.data)
 
-                  this.$store.commit('login', response.data)
+                  this.$store.dispatch('login', response.data);
                   this.$router.push({path: './home'});
                 }
               })

@@ -5,8 +5,11 @@ import kr.ac.daegu.springbootapi.member.MemberRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,13 +38,20 @@ public class MemberController {
     }
 
     //1224 수정필요
+
     @PostMapping("/user/info")
-    public String getUserInfo(@RequestBody String email){
-        log.debug("이메일 : " + email);
-        String hi2 = memberRepository.getMemberByEmail(email);
-        log.debug("이메일2 : " +  hi2 );
-        return "hihi";
+    public Map<String, String> getUserInfo(@RequestBody MemberDto memberDto){
+        String email = memberDto.getEmail();
+        log.debug("UserInfo in : " + email);
+        Member UserInfo = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(email));
+        Map<String,String> UserData = new HashMap<String, String>();
+        UserData.put("nickName",UserInfo.getNickName());
+        UserData.put("firstName",UserInfo.getFirstName());
+        UserData.put("lastName",UserInfo.getLastName());
+        return UserData;
     }
+
 }
 
 @Data

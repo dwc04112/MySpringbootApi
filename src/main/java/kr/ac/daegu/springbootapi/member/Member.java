@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
@@ -30,7 +31,9 @@ public class Member {
         this.nickName = nickName;
     }
 
+
     public static Member createMember(String email, String password, String firstName,String lastName, String nickName){
         return new Member(email, password, firstName, lastName, nickName);
     }
+
 }

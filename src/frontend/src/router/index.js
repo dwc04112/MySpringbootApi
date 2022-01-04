@@ -4,6 +4,9 @@ import Home from '../views/Home.vue'
 import board from "@/views/board";
 import Login from "@/views/Login";
 import signup from "@/views/signup";
+import mypage from "@/views/mypage/mypage";
+import personalInfo from "@/views/mypage/personalInfo";
+import mypageNavi from "@/views/mypage/mypageNavi";
 
 Vue.use(VueRouter)
 
@@ -35,6 +38,21 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: signup
+  },
+  {
+    path: '/mypage',
+    name: 'mypage',
+    component: mypage
+  },
+  {
+    path: '/mypage/personal-info',
+    name: 'personalIofo',
+    component: personalInfo
+  },
+  {
+    path: '/mypageNavi',
+    name: 'mypageNavi',
+    component: mypageNavi
   },
 ]
 

@@ -1,22 +1,27 @@
 import router from '@/router'
+import axios from "axios";
 
 const userStore = {
     state: {
         email: '',
-        // userName: '',
         token: '',
         nickName: '',
         firstName: '',
         lastName: '',
     },
     mutations: {
-        login: function (state, payload) {
-            state.email = payload.email
-            // state.userName = payload.userName
-            state.token = payload.token
-            console.log("after token? : " + state.token)
-
+        login: function (state, data) {
+            state.email = data.email
+            state.token = data.token
+            console.log("after email? : ", state.email)
         },
+        putUserInfo: function (state, data){
+            state.firstName = data.firstName
+            state.lastName = data.lastName
+            state.nickName = data.nickName
+            console.log(state)
+        },
+
         loginCheck: function (state, payload) {
             console.log("hihi" + payload)
             if(payload===401){
@@ -30,7 +35,44 @@ const userStore = {
                 })
             }
         },
+        failUserInfo: function (){
+            userStore.state = null;
+        },
 
+
+
+
+    },
+    actions: {
+        login({commit,dispatch}, payload){
+            let data = {};
+            data.email = JSON.parse(atob(payload.token.split('.')[1])).jti;
+            data.token = payload.token
+            commit('login', data)
+            dispatch('getUserInfo', data.email)
+
+
+        },
+        getUserInfo({commit}, context){
+            console.log("hihi")
+            console.log("getUserInfo : " + context)
+            let data={};
+            data.email = context
+            axios.post('/user/info', JSON.stringify({"email":data.email}), {
+                headers: {
+                    "Content-Type": `application/json`,
+                },
+            })
+                .then((res) => {
+                    data.nickName = res.data.nickName
+                    data.firstName = res.data.firstName
+                    data.lastName = res.data.lastName
+                    commit('putUserInfo', data)
+                })
+                .catch((error)=>{
+                    console.log(error.res)
+                })
+        }
     },
 }
 export default userStore

@@ -1,5 +1,12 @@
 <template>
   <v-container grid-list-md>
+    <v-btn
+        text
+        style="margin-top: 2%; margin-left: 90%"
+        @click="inMyPage"
+    >
+      마이페이지
+    </v-btn>
     <v-text-field v-model="search" label="검색창" single-line></v-text-field>
     <v-layout row wrap>
       <v-flex xs12>
@@ -68,8 +75,10 @@ export default {
           })
     },
     inView(id){
-
       this.$router.push({path:'./board',query: {id}});
+    },
+    inMyPage(){
+      this.$router.push({path:'./mypage'});
     },
   },
   mounted(){
