@@ -50,7 +50,7 @@ export default {
     return {
       items: [
         { title: 'MyPage', icon: 'mdi-view-dashboard' , link:'/mypage'},
-        { title: 'Account', icon: 'mdi-account-box', link:'/mypage/personal-info' },
+        { title: 'Personal Info', icon: 'mdi-account-box', link:'/mypage/personal-info' },
         { title: 'Admin', icon: 'mdi-gavel' },
       ],
 

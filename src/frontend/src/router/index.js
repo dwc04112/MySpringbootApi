@@ -7,6 +7,7 @@ import signup from "@/views/signup";
 import mypage from "@/views/mypage/mypage";
 import personalInfo from "@/views/mypage/personalInfo";
 import mypageNavi from "@/views/mypage/mypageNavi";
+import nickname from "@/views/mypage/infoEdit/nickname";
 
 Vue.use(VueRouter)
 
@@ -45,14 +46,29 @@ const routes = [
     component: mypage
   },
   {
+    path: '/mypageNavi',
+    name: 'mypageNavi',
+    component: mypageNavi
+  },
+  {
     path: '/mypage/personal-info',
     name: 'personalIofo',
     component: personalInfo
   },
   {
-    path: '/mypageNavi',
-    name: 'mypageNavi',
-    component: mypageNavi
+    path: '/mypage/name',
+    name: 'name',
+    component: personalInfo
+  },
+  {
+    path: '/mypage/nickname',
+    name: 'nickname',
+    component: nickname
+  },
+  {
+    path: '/mypage/email',
+    name: 'email',
+    component: personalInfo
   },
 ]
 

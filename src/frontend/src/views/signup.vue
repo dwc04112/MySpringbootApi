@@ -13,7 +13,7 @@
           계정 생성하기
         </v-card-title>
 
-        <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever, online and offline.</v-card-subtitle>
+        <v-card-subtitle> hihihi </v-card-subtitle>
         <v-row style="margin-top: 15px; margin-right: 30px; margin-left: 30px">
           <v-col>
             <div style="float: left; width: 20%;">

@@ -55,9 +55,9 @@ export default {
         {text: 'Actions',value: 'actions', sortable: false },
       ],
       userInfo:[
-        {name:'닉네임', data:  this.$store.state.userStore.nickName , id: 1},
-        {name:'이름', data: this.firstName+this.lastName, id:2},
-        {name:'이메일',  data: this.$store.state.userStore.email, id:3},
+        {name:'닉네임', data:  this.$store.state.userStore.nickName , id:'nickname'},
+        {name:'이름', data: this.firstName+this.lastName, id:'name'},
+        {name:'이메일',  data: this.$store.state.userStore.email, id:'email'},
 
       ]
     }
@@ -72,7 +72,7 @@ export default {
     },
     editInfo(id){
       console.log('id는? : ' + id)
-
+      this.$router.push({path:'./'+id})
     },
   },
   mounted(){

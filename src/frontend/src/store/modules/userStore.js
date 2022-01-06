@@ -19,7 +19,8 @@ const userStore = {
             state.firstName = data.firstName
             state.lastName = data.lastName
             state.nickName = data.nickName
-            console.log(state)
+            state.id = data.id
+            //console.log(state)
         },
 
         loginCheck: function (state, payload) {
@@ -50,11 +51,8 @@ const userStore = {
             data.token = payload.token
             commit('login', data)
             dispatch('getUserInfo', data.email)
-
-
         },
         getUserInfo({commit}, context){
-            console.log("hihi")
             console.log("getUserInfo : " + context)
             let data={};
             data.email = context
@@ -64,9 +62,11 @@ const userStore = {
                 },
             })
                 .then((res) => {
+                    console.log(res.data)
                     data.nickName = res.data.nickName
                     data.firstName = res.data.firstName
                     data.lastName = res.data.lastName
+                    data.id = res.data.id
                     commit('putUserInfo', data)
                 })
                 .catch((error)=>{

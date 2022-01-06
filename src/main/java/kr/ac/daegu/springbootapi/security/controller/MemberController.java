@@ -40,22 +40,37 @@ public class MemberController {
     //1224 수정필요
 
     @PostMapping("/user/info")
-    public Map<String, String> getUserInfo(@RequestBody MemberDto memberDto){
+    public Member getUserInfo(@RequestBody MemberDto memberDto){
         String email = memberDto.getEmail();
         log.debug("UserInfo in : " + email);
         Member UserInfo = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(email));
+        /*
+        (public Map<String, String> ~~)
         Map<String,String> UserData = new HashMap<String, String>();
         UserData.put("nickName",UserInfo.getNickName());
         UserData.put("firstName",UserInfo.getFirstName());
         UserData.put("lastName",UserInfo.getLastName());
         return UserData;
+
+         */
+        return UserInfo;
     }
 
+    @PostMapping("/user/edit")
+    public String editUserInfo(@RequestBody MemberDto memberDto){
+        log.debug("Member : " + memberDto);
+        if(memberDto.getNickName()!=null){
+         memberRepository.EditMemberInfo(memberDto.getNickName(), memberDto.getId());
+         return "successful edit nickname !";
+        }
+        return null;
+    }
 }
 
 @Data
 class MemberDto{
+    private Long id;
     private String email;
     private String password;
     private String firstName;
