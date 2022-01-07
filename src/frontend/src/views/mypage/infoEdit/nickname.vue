@@ -43,7 +43,7 @@
       </v-btn>
       <v-btn
           text
-          @click="editCommit"
+          @click="pageLink"
       >
         Back
       </v-btn>
@@ -102,11 +102,14 @@ export default {
         },
       }).then(response=>{
         console.log(response.data)
-        this.$store.commit('putUserInfo', {nickName : this.nickName});
+        this.$store.commit('putUserNickName', {nickName : this.nickName});
       }).catch(error =>{
         console.log(error.response);
       })
-    }
+    },
+    pageLink(){
+      this.$router.push({path:'./personal-Info'})
+    },
   }
 }
 </script>

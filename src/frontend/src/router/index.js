@@ -8,6 +8,7 @@ import mypage from "@/views/mypage/mypage";
 import personalInfo from "@/views/mypage/personalInfo";
 import mypageNavi from "@/views/mypage/mypageNavi";
 import nickname from "@/views/mypage/infoEdit/nickname";
+import name from "@/views/mypage/infoEdit/name"
 
 Vue.use(VueRouter)
 
@@ -53,12 +54,12 @@ const routes = [
   {
     path: '/mypage/personal-info',
     name: 'personalIofo',
-    component: personalInfo
+    component: personalInfo,
   },
   {
     path: '/mypage/name',
     name: 'name',
-    component: personalInfo
+    component: name
   },
   {
     path: '/mypage/nickname',

@@ -33,7 +33,14 @@
 
         <template v-slot:append>
           <div class="pa-2">
-            <v-btn block color="#E2C2B9">
+            <v-btn block color="#E2C2B9" @click="linkTo('home')">
+              Home
+            </v-btn>
+          </div>
+        </template>
+        <template v-slot:append>
+          <div class="pa-2">
+            <v-btn block color="#E2C2B9" @click="linkTo('home')">
               Logout
             </v-btn>
           </div>
@@ -58,7 +65,7 @@ export default {
   },
   methods:{
     linkTo(link){
-      this.$router.push(link)
+      this.$router.push({path:"/"+link})
     }
   }
 }

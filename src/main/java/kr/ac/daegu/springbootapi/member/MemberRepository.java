@@ -23,5 +23,10 @@ public interface MemberRepository extends CrudRepository<Member, Long> {
     @Transactional
     @Modifying
     @Query("update Member m set m.nickName = ?1 where m.id=?2")
-    void EditMemberInfo(String nickName, Long id);
+    void EditMemberNickName(String nickName, Long id);
+
+    @Transactional
+    @Modifying
+    @Query("update Member m set m.firstName = ?1, m.lastName= ?2  where m.id=?3")
+    void EditMemberName(String firstName,String lastName, Long id);
 }

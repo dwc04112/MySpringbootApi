@@ -12,6 +12,7 @@ axios.interceptors.request.use(function (config) {
         return config;
     }
     config.headers.Authorization = "Bearer "+store.state.userStore.token;
+    //this.$router.go(0); //새로고침
     return config;
 }, function (error) {
     // Do something with request error

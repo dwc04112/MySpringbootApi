@@ -20,8 +20,18 @@ const userStore = {
             state.lastName = data.lastName
             state.nickName = data.nickName
             state.id = data.id
-            //console.log(state)
+            console.log(state)
         },
+
+        putUserNickName: function (state, data){
+            state.nickName = data.nickName
+        },
+        putUserName: function(state, data){
+            state.firstName = data.firstName
+            state.lastName = data.lastName
+        },
+
+
 
         loginCheck: function (state, payload) {
             console.log("hihi" + payload)
@@ -40,9 +50,6 @@ const userStore = {
             userStore.state = null;
         },
 
-
-
-
     },
     actions: {
         login({commit,dispatch}, payload){
@@ -52,6 +59,7 @@ const userStore = {
             commit('login', data)
             dispatch('getUserInfo', data.email)
         },
+
         getUserInfo({commit}, context){
             console.log("getUserInfo : " + context)
             let data={};

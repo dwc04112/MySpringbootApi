@@ -32,6 +32,7 @@
           </template>
 
         </v-data-table>
+
       </div>
     </v-card>
   </div>
@@ -45,40 +46,36 @@ export default {
   components: {mypageNavi},
   data () {
     return {
-      firstName: '',
-      lastName: '',
-      email: '',
-      nickName: '',
       headers:[
         {text : 'name', value: 'name'},
         {text : 'data', value: 'data'},
         {text: 'Actions',value: 'actions', sortable: false },
       ],
       userInfo:[
-        {name:'닉네임', data:  this.$store.state.userStore.nickName , id:'nickname'},
-        {name:'이름', data: this.firstName+this.lastName, id:'name'},
-        {name:'이메일',  data: this.$store.state.userStore.email, id:'email'},
-
+        {name:'닉네임', data: this.$store.state.userStore.nickName , id:'nickname'},
+        {name:'이름', data: this.$store.state.userStore.firstName+this.$store.state.userStore.lastName, id:'name'},
+        {name:'이메일',  data: this.$store.state.userStore.email , id:'email'},
       ]
     }
   },
   methods: {
-    getPersonalInfo() {
-      this.email = this.$store.state.userStore.email;
-      this.firstName = this.$store.state.userStore.firstName;
-      this.lastName = this.$store.state.userStore.lastName;
-      this.nickName = this.$store.state.userStore.nickName;
-      // this.$store.dispatch('getUserInfo');
+    getUserInfo(){
+      console.log('다시 정보받기')
+      this.$store.dispatch('getUserInfo', this.$store.state.userStore.email)
+
     },
     editInfo(id){
-      console.log('id는? : ' + id)
+      console.log('수정할 정보? : ' + id)
       this.$router.push({path:'./'+id})
+
     },
   },
+
   mounted(){
-    this.getPersonalInfo();
+    this.getUserInfo();
   }
 }
+
 </script>
 
 <style scoped>
