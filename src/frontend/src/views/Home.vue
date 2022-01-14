@@ -1,12 +1,26 @@
 <template>
   <v-container grid-list-md>
-    <v-btn
-        text
-        style="margin-top: 2%; margin-left: 90%"
-        @click="inMyPage"
-    >
-      마이페이지
-    </v-btn>
+    <v-card-actions style=" margin-left: 80%;">
+      <div class="pa-4">
+        <v-btn
+            block color="#FE7E6D"
+            style="margin-top: 2%; color:  #FEECE9;"
+            @click="boardWrite"
+        >
+          Write
+        </v-btn>
+      </div>
+
+      <div  class="pa-4">
+        <v-btn
+            block color="#FE7E6D"
+            style="margin-top: 2%; color: #FEECE9;"
+            @click="inMyPage"
+        >
+          MyPage
+        </v-btn>
+      </div>
+    </v-card-actions>
     <v-text-field v-model="search" label="검색창" single-line></v-text-field>
     <v-layout row wrap>
       <v-flex xs12>
@@ -18,8 +32,8 @@
             :search="search"
         >
           <template v-slot:item="{ item }">
-            <tr @click="inView(item.id)">
-              <td :class="headers[0].class">{{item.id}}</td>
+            <tr @click="inView(item.bid)">
+              <td :class="headers[0].class">{{item.bid}}</td>
               <td :class="headers[1].class">{{ item.subject }}</td>
               <td :class="headers[2].class">{{item.author }}</td>
               <td :class="headers[3].class">{{item.writeDate }}</td>
@@ -36,7 +50,7 @@
 </template>
 
 <script>
-import board from "@/views/board";
+import board from "@/views/board/board";
 export default {
   name: 'App',
   data: () => ({
@@ -50,7 +64,7 @@ export default {
 
 
     headers: [
-      { text: '번호', value: 'id', sortable: true},
+      { text: '번호', value: 'bid', sortable: true},
       { text: '제목', value: 'subject', sortable: true },
       { text: '글쓴이', value: 'author', sortable: false },
       { text: '등록일', value: 'writeDate', sortable: true ,filterable:false},
@@ -74,11 +88,14 @@ export default {
             console.log(error.response);
           })
     },
-    inView(id){
-      this.$router.push({path:'./board',query: {id}});
+    inView(bid){
+      this.$router.push({path:'./board',query: {bid}});
     },
     inMyPage(){
       this.$router.push({path:'./mypage'});
+    },
+    boardWrite(){
+      this.$router.push({path:'./boardWrite'});
     },
   },
   mounted(){

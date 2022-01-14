@@ -61,11 +61,11 @@ public class MemberController {
     public String editUserInfo(@RequestBody MemberDto memberDto){
         log.debug("Member : " + memberDto);
         if(memberDto.getNickName()!=null){
-         memberRepository.EditMemberNickName(memberDto.getNickName(), memberDto.getId());
+         memberRepository.EditMemberNickName(memberDto.getNickName(), memberDto.getMid());
          return "successful edit nickname !";
         }
         else if(memberDto.getLastName()!=null && memberDto.getLastName()!=null){
-            memberRepository.EditMemberName(memberDto.getFirstName(),memberDto.getLastName(),memberDto.getId());
+            memberRepository.EditMemberName(memberDto.getFirstName(),memberDto.getLastName(),memberDto.getMid());
             return "successful edit name !";
         }
         return null;
@@ -74,7 +74,7 @@ public class MemberController {
 
 @Data
 class MemberDto{
-    private Long id;
+    private Long mid;
     private String email;
     private String password;
     private String firstName;

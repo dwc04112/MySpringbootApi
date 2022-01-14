@@ -13,7 +13,9 @@ import java.util.List;
 @Getter
 @Setter
 public class BoardDTO {
-    private int id;
+    private int bid;
+
+    private long mid;
     private String author;
     private String subject;
     private String content;
@@ -24,6 +26,7 @@ public class BoardDTO {
     private String password;
     private int replyRootId;
     private int depth;
+
     private int orderNum;
     private String isDel;
 
@@ -32,7 +35,8 @@ public class BoardDTO {
     @Override
     public String toString() {
         return "BoardDTO{" +
-                "id=" + id +
+                "bid=" + bid +
+                "mid=" + mid +
                 ", author='" + author + '\'' +
                 ", subject='" + subject + '\'' +
                 ", content='" + content + '\'' +

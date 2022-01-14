@@ -1,6 +1,6 @@
 package kr.ac.daegu.springbootapi.boardjpa.service;
 
-import kr.ac.daegu.springbootapi.board.model.BoardDTO;
+import kr.ac.daegu.springbootapi.boardjpa.dto.BoardDTO;
 import kr.ac.daegu.springbootapi.boardjpa.model.Board;
 import kr.ac.daegu.springbootapi.boardjpa.model.BoardRepository;
 import kr.ac.daegu.springbootapi.common.ApiResponse;
@@ -26,8 +26,9 @@ public class BoardJpaService {
     public List<Board> getBoardListVue() {
         return boardRepository.findBoardByIsDel("N");
     }
-    public List<Board> getBoardById2(int id) {
-        return boardRepository.findBoardByIdAndIsDel(id,"N");
+    public List<Board> getBoardByBId2(int bId) {
+
+        return boardRepository.findBoardByBidAndIsDel(bId,"N");
     }
 
 
@@ -55,7 +56,6 @@ public class BoardJpaService {
                 return null;
         }
 
-
 /*
         if(stype.equals("author")){
             log.debug("여기는 author, value = " + svalue);
@@ -63,11 +63,14 @@ public class BoardJpaService {
         }
 
  */
-
     }
 
-    public Board getBoardById(Integer id) {
-        Optional<Board> board = boardRepository.findBoardById(id);
+
+
+
+
+    public Board getBoardById(Integer bId) {
+        Optional<Board> board = boardRepository.findBoardByBid(bId);
         // 아래 코드를 한줄로 줄이면...
 //        if(board.isPresent()){
 //            return board.get();
@@ -78,6 +81,59 @@ public class BoardJpaService {
     }
 
 
+    //글쓰기
+    public Board boardWrite( BoardDTO boardDTO) {
+        int newBoardBidValue = this.getNewBoardBidValue(boardRepository);
+
+        Board postData = Board.builder()
+                .bid(newBoardBidValue)
+                .mid(boardDTO.getMid())
+                .author(boardDTO.getAuthor()) //닉네임
+                .subject(boardDTO.getSubject())
+                .content(boardDTO.getContent())
+                .commentCount(0)
+                .depth(0)
+                .orderNum(0)
+                .isDel("N")
+                .readCount(0)
+                .replyRootId(newBoardBidValue)
+                .writeDate(LocalDate.now())
+                .writeTime(LocalTime.now())
+                .build();
+        return boardRepository.save(postData);
+    }
+    //게시글 id를 정하는 로직
+    private int getNewBoardBidValue(BoardRepository boardRepository) {
+        int result;
+        Board boardOfMaxId = boardRepository.findTopByOrderByBidDesc();
+
+        if(boardOfMaxId == null) {
+            result = 1;
+            log.debug("no board data, maxId is 1");
+        } else {
+            result = boardOfMaxId.getBid() + 1;
+            log.debug("maxIdFromBoard="+boardOfMaxId.getBid());
+        }
+        log.debug("newBoardIdValue="+result);
+        return result;
+    }
+
+    public Board editBoard(BoardDTO boardDTO) {
+        Optional<Board> boardData = boardRepository.findBoardByBid(boardDTO.getBid());
+
+        // 람다식을 사용하여
+        boardData.ifPresent(selectedBoard -> {
+            selectedBoard.setSubject(boardDTO.getSubject());
+            selectedBoard.setContent(boardDTO.getContent());
+            selectedBoard.setWriteDate(LocalDate.now());
+            selectedBoard.setWriteTime(LocalTime.now());
+            boardRepository.save(selectedBoard);
+        });
+
+        return boardData.orElseGet(boardData::get);
+    }
+
+/*
     public Board postBoard(BoardDTO boardDTO) {
         log.debug("author="+boardDTO.getAuthor());
         // 답글 작성할 수 있을려면 java단에서 id값을 정한 뒤 save해야 하겠다.
@@ -102,6 +158,9 @@ public class BoardJpaService {
 
         return boardRepository.save(postData);
     }
+
+ */
+ /*
 
     private int getNewBoardIdValue(BoardRepository boardRepository) {
         int result;
@@ -146,9 +205,13 @@ public class BoardJpaService {
             return new ApiResponse(false, "failed to delete board id " + id);
         }
     }
+
+     */
+
+    /*
     @Transactional
     public ApiResponse<BoardDTO> postReply(BoardDTO dto) {
-        /* JPQL TEST 겸 원글 불러오기 */
+        // JPQL TEST 겸 원글 불러오기
 
         Board b = boardRepository.selectBoard(dto.getId());
         if(b == null){
@@ -156,7 +219,7 @@ public class BoardJpaService {
         }
         log.debug(b.toString());
 
-        /* depth와 orderNum을 정하는 로직 START */
+        // depth와 orderNum을 정하는 로직 START
         int replyRootId = dto.getReplyRootId();
         int depth = dto.getDepth();
         int orderNum = dto.getOrderNum();
@@ -178,10 +241,10 @@ public class BoardJpaService {
         int newDepth = depth + 1;
         log.debug("newDepth=" + newDepth);
         String newSubject = appendPrefixString("RE : ", depth, dto.getSubject());
-        /* depth와 orderNum을 정하는 로직 END */
+        // depth와 orderNum을 정하는 로직 END
 
         int newBoardIdValue = this.getNewBoardIdValue(boardRepository);
-        /* 새로운 답글 컨텐츠 추가 */
+        // 새로운 답글 컨텐츠 추가
         Board newB = Board.builder()
                 .id(newBoardIdValue)
                 .subject(newSubject)
@@ -199,9 +262,10 @@ public class BoardJpaService {
                 .build();
         boardRepository.save(newB);
 
-        /* 추가한 답글 컨텐츠 결과 리턴 */
+        // 추가한 답글 컨텐츠 결과 리턴
         // JPA를 사용함에 있어 Entity 객체와 DTO객체를 일부러 분리한 이유, Entity <-> DTO의 변환 참고
         // https://dbbymoon.tistory.com/4
+
         dto.setSubject(newSubject);
         dto.setReplyRootId(replyRootId);
         dto.setDepth(newDepth);
@@ -218,6 +282,8 @@ public class BoardJpaService {
         builder.append(target);
         return builder.toString();
     }
+
+    */
 
 
 }

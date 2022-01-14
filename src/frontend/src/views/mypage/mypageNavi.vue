@@ -37,8 +37,6 @@
               Home
             </v-btn>
           </div>
-        </template>
-        <template v-slot:append>
           <div class="pa-2">
             <v-btn block color="#E2C2B9" @click="linkTo('home')">
               Logout

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import board from "@/views/board";
+import board from "@/views/board/board";
 import Login from "@/views/Login";
 import signup from "@/views/signup";
 import mypage from "@/views/mypage/mypage";
@@ -9,6 +9,8 @@ import personalInfo from "@/views/mypage/personalInfo";
 import mypageNavi from "@/views/mypage/mypageNavi";
 import nickname from "@/views/mypage/infoEdit/nickname";
 import name from "@/views/mypage/infoEdit/name"
+import boardWrite from "@/views/board/boardWrite";
+import boardEdit from "@/views/board/boardEdit";
 
 Vue.use(VueRouter)
 
@@ -27,11 +29,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/board',
-    name: 'board',
-    component: board
-  },
-  {
     path: '/home',
     name: 'Home',
     component: Home
@@ -41,6 +38,23 @@ const routes = [
     name: 'signup',
     component: signup
   },
+
+  {
+    path: '/board',
+    name: 'board',
+    component: board
+  },
+  {
+    path: '/boardEdit',
+    name: 'boardEdit',
+    component: boardEdit
+  },
+  {
+    path: '/boardWrite',
+    name: 'boardWrite',
+    component: boardWrite
+  },
+
   {
     path: '/mypage',
     name: 'mypage',

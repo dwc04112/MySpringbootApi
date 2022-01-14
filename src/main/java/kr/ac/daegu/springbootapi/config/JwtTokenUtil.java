@@ -39,18 +39,18 @@ public class JwtTokenUtil {
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
-    public String generateToken(String id) {
-        return generateToken(id, new HashMap<>());
+    public String generateToken(String mid) {
+        return generateToken(mid, new HashMap<>());
     }
 
-    public String generateToken(String id, Map<String, Object> claims) {
-        return doGenerateToken(id, claims);
+    public String generateToken(String mid, Map<String, Object> claims) {
+        return doGenerateToken(mid, claims);
     }
 
-    private String doGenerateToken(String id, Map<String, Object> claims) {
+    private String doGenerateToken(String mid, Map<String, Object> claims) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setId(id)
+                .setId(mid)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY_HOUR))
                 .signWith(SignatureAlgorithm.HS512, secret)

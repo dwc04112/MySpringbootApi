@@ -16,8 +16,11 @@ import java.time.LocalTime;
 public class Board {
 
     @Id
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "bid")
+    private Integer bid;
+
+    @Column(name = "mid")
+    private Long mid;
 
     @Column(name = "author")
     private String author;
@@ -34,8 +37,6 @@ public class Board {
     private Integer readCount;
     @Column(name = "commentCount")
     private Integer commentCount;
-    @Column(name = "password")
-    private String password;
     @Column(name = "replyRootId")
     private Integer replyRootId;
     @Column(name = "depth")
@@ -45,7 +46,8 @@ public class Board {
     @Column(name = "isDel")
     private String isDel;
 
-    public Board(Integer id,
+    public Board(Integer bid,
+                 Long mid,
                  String author,
                  String subject,
                  String content,
@@ -53,12 +55,12 @@ public class Board {
                  LocalTime writeTime,
                  Integer readCount,
                  Integer commentCount,
-                 String password,
                  Integer replyRootId,
                  Integer depth,
                  Integer orderNum,
                  String isDel) {
-        this.id = id;
+        this.bid = bid;
+        this.mid = mid;
         this.author = author;
         this.subject = subject;
         this.content = content;
@@ -66,7 +68,6 @@ public class Board {
         this.writeTime = writeTime;
         this.readCount = readCount;
         this.commentCount = commentCount;
-        this.password = password;
         this.replyRootId = replyRootId;
         this.depth = depth;
         this.orderNum = orderNum;

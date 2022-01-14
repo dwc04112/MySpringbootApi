@@ -8,6 +8,7 @@ const userStore = {
         nickName: '',
         firstName: '',
         lastName: '',
+        mid :'',
     },
     mutations: {
         login: function (state, data) {
@@ -19,7 +20,7 @@ const userStore = {
             state.firstName = data.firstName
             state.lastName = data.lastName
             state.nickName = data.nickName
-            state.id = data.id
+            state.mid = data.mid
             console.log(state)
         },
 
@@ -74,7 +75,7 @@ const userStore = {
                     data.nickName = res.data.nickName
                     data.firstName = res.data.firstName
                     data.lastName = res.data.lastName
-                    data.id = res.data.id
+                    data.mid = res.data.mid
                     commit('putUserInfo', data)
                 })
                 .catch((error)=>{

@@ -1,6 +1,6 @@
 package kr.ac.daegu.springbootapi.boardjpa.controller;
 
-import kr.ac.daegu.springbootapi.board.model.BoardDTO;
+import kr.ac.daegu.springbootapi.boardjpa.dto.BoardDTO;
 import kr.ac.daegu.springbootapi.boardjpa.model.Board;
 import kr.ac.daegu.springbootapi.boardjpa.service.BoardJpaService;
 import kr.ac.daegu.springbootapi.common.ApiResponse;
@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -29,11 +32,26 @@ public class BoardJpaController {
         return boardJpaService.getBoardListVue();
     }
 
-    @GetMapping(value = "/{id}")
-    public List<Board> SelectListid(@PathVariable int id){
-        return boardJpaService.getBoardById2(id);
+    @GetMapping(value = "/{bid}")
+    public List<Board> SelectListid(@PathVariable int bid){
+
+        return boardJpaService.getBoardByBId2(bid);
     }
 
+    @PostMapping(value = "/write")
+    public Board boardWrite(@RequestBody BoardDTO boardDTO){
+        Board data = boardJpaService.boardWrite(boardDTO);
+        return data;
+    }
+
+    @PostMapping(value = "/edit")
+    public String editBoard(@RequestBody BoardDTO boardDTO){
+        boardJpaService.editBoard(boardDTO);
+        return "success to edit board, num = " + boardDTO.getBid();
+    }
+
+
+/*
     @GetMapping(value = "/")
     public ApiResponse<BoardDTO> getBoardList(@RequestParam int page, @RequestParam int size,
                                               @RequestParam(required = false) String stype , @RequestParam(required = false) String svalue){
@@ -42,7 +60,7 @@ public class BoardJpaController {
         return new ApiResponse(true, list);
     }
 
-/*
+
     @GetMapping(value = "/{id}") // PathVariable
     public ApiResponse<BoardDTO> getBoardById(@PathVariable Integer id){
         log.debug("hihi id : " + id);
@@ -51,7 +69,7 @@ public class BoardJpaController {
     }
 
 
- */
+
     @PostMapping(value = "/")
     public ApiResponse<BoardDTO> postBoard(@RequestBody BoardDTO boardDTO){
         log.debug("author="+boardDTO.getAuthor());
@@ -90,6 +108,9 @@ public class BoardJpaController {
         }
         return boardJpaService.postReply(boardDTO);
     }
+
+
+ */
 
 
 }
