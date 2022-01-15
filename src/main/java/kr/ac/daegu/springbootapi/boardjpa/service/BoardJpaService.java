@@ -118,9 +118,12 @@ public class BoardJpaService {
         return result;
     }
 
-    public Board editBoard(BoardDTO boardDTO) {
+    public ApiResponse<BoardDTO> editBoard(BoardDTO boardDTO) {
+        boolean matchInfo = this.matchInfo(boardRepository, boardDTO);
+        if(!matchInfo){
+            return new ApiResponse<>(false,"not match where board Id and member id");
+        }
         Optional<Board> boardData = boardRepository.findBoardByBid(boardDTO.getBid());
-
         // 람다식을 사용하여
         boardData.ifPresent(selectedBoard -> {
             selectedBoard.setSubject(boardDTO.getSubject());
@@ -129,8 +132,38 @@ public class BoardJpaService {
             selectedBoard.setWriteTime(LocalTime.now());
             boardRepository.save(selectedBoard);
         });
+        Board data = boardData.orElseGet(boardData::get);
+        return new ApiResponse(true, data);
+    }
 
-        return boardData.orElseGet(boardData::get);
+    // Board id 에 있는 member Id와 사용자의 member Id 비교
+    private boolean matchInfo(BoardRepository boardRepository, BoardDTO boardDTO){
+        int BoardId = boardDTO.getBid();        // 전달받은 Bid
+        long MemberId = boardDTO.getMid();      // 전달받은 Mid
+        long midFromBoardId = boardRepository.getMemberId(BoardId);     //받은 Bid로 찾은 Mid
+        if(MemberId!=midFromBoardId){
+            log.debug("게시글의 Id와 사용자의 ID가 일치하지 않습니다");
+           return false;
+        }
+        return true;
+    }
+
+    public ApiResponse<BoardDTO> updateIsDelBoardById(BoardDTO boardDTO) {
+        // JDK 1.8 Optional에 관해 찾아볼것.
+        int boardId = boardDTO.getBid();
+        log.debug("request.id=" + boardId);
+        Optional<Board> boardData = boardRepository.findBoardByBid(boardId);
+        // 위 boardData가 null 이면 RuntimeException 발생시키고 메소드 종료.
+        Board data = boardData.orElseThrow(() -> new RuntimeException("no data"));
+
+        boolean matchInfo = this.matchInfo(boardRepository, boardDTO);
+        if(!matchInfo){
+            return new ApiResponse(false, "failed to delete board id " + boardId);
+        }else {
+            data.setIsDel("Y");
+            boardRepository.save(data); // JPA는 INSERT나 UPDATE 같이 save()를 호출한다.
+            return new ApiResponse(true, "board id " + boardId + " is successfully deleted");
+        }
     }
 
 /*

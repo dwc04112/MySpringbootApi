@@ -90,13 +90,20 @@ export default {
       editData.bid = this.$route.query.bid
       editData.content = this.content;
       editData.subject = this.subject;
+      editData.mid = this.$store.state.userStore.mid
       this.$axios.post("boardjpa/edit",JSON.stringify(editData),{
         headers: {
           "Content-Type": `application/json`,
         },
       }).then(response=>{
         console.log(response.data)
-        alert("게시글을 성공적으로 수정했습니다.");
+
+          if(response.data.success === false){
+            alert("글 수정 권한이 없습니다.")
+          }else{
+            alert("게시글을 성공적으로 수정했습니다.");
+          }
+
         this.$router.push({path: './home'});
       }).catch(error =>{
         console.log(error.response);

@@ -30,10 +30,16 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 
 
 
+
+
+
+
     // JPQL != SQL
     @Query("Select b FROM Board b where b.bid = ?1") // JPA를 이용하여 JPQL만든 후 쿼리를 날린다.
     Board selectBoard(int bId);
 
+    @Query("select b.mid From Board b where b.bid = ?1")
+    Long getMemberId(int bId);
 
 
     @Modifying

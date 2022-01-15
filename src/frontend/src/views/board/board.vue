@@ -40,6 +40,16 @@
         Delete
       </v-btn>
 
+
+      <!--
+          01-14 작성
+
+          1. 글 삭제 폼
+          board에서 Delete 버튼 클릭시 오버레이로 삭제할지 말지 버튼 생성
+
+          2. 수정할 것
+          수정과 삭제시 본인이 맞는지 인증하는 코드 필요
+      -->
       <v-overlay
           :absolute="true"
           :value="overlay"
@@ -75,6 +85,8 @@ export default {
   data: () => ({
     users:'',
     overlay : false,
+  //  content : '',
+  //  subject : '',
   }),
 
 
@@ -84,6 +96,8 @@ export default {
       this.$axios.get("boardjpa/"+ data,)
         .then(response => {
           this.users = response.data;
+        //  this.content = response.data[0].content
+        //  this.subject = response.data[0].subject
           console.log(response.data);
         })
         .catch(error =>{
@@ -98,6 +112,26 @@ export default {
       this.$router.push({path:'./boardEdit',query:{bid}})
     },
     deleteLink(){
+      let editData = {}
+      editData.bid = this.$route.query.bid
+      editData.mid = this.$store.state.userStore.mid
+      this.$axios.post("boardjpa/delete",JSON.stringify(editData),{
+        headers: {
+          "Content-Type": `application/json`,
+        },
+      }).then(response=>{
+        console.log(response.data)
+
+        if(response.data.success === false){
+          alert("글 삭제 권한이 없습니다.")
+        }else{
+          alert("게시글을 성공적으로 삭제했습니다.");
+        }
+
+        this.$router.push({path: './home'});
+      }).catch(error =>{
+        console.log(error.response);
+      })
 
       this.overlay=false
     },

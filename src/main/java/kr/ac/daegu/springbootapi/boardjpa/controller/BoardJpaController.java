@@ -45,11 +45,18 @@ public class BoardJpaController {
     }
 
     @PostMapping(value = "/edit")
-    public String editBoard(@RequestBody BoardDTO boardDTO){
-        boardJpaService.editBoard(boardDTO);
-        return "success to edit board, num = " + boardDTO.getBid();
+    public ApiResponse<BoardDTO> editBoard(@RequestBody BoardDTO boardDTO){
+        return boardJpaService.editBoard(boardDTO);
     }
 
+
+    // DELETE /boardjpa/{id} 구현할것.
+    // logic : board.controller.BoardController의 로직 따를것
+    //         무슨말이냐면 DB에 데이터를 DELETE 시키지 말고, board 컬럼 중 isDel 을 "Y"로 업데이트.
+    @PostMapping(value = "/delete")
+    public ApiResponse<BoardDTO> updateIsDelBoardById(@RequestBody BoardDTO boardDTO){
+        return boardJpaService.updateIsDelBoardById(boardDTO);
+    }
 
 /*
     @GetMapping(value = "/")
