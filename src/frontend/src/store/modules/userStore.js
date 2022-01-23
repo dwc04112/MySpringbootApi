@@ -1,6 +1,8 @@
 import router from '@/router'
 import axios from "axios";
 
+
+
 const userStore = {
     state: {
         email: '',
@@ -51,6 +53,22 @@ const userStore = {
             userStore.state = null;
         },
 
+
+        resetState: function (state){
+
+            state.email = '';
+            state.token = '';
+            state.nickName = '';
+            state.firstName = '';
+            state.lastName = '';
+            state.mid = '';
+
+
+
+            console.log(state)
+        }
+
+
     },
     actions: {
         login({commit,dispatch}, payload){
@@ -59,6 +77,17 @@ const userStore = {
             data.token = payload.token
             commit('login', data)
             dispatch('getUserInfo', data.email)
+        },
+
+        logout({commit}){
+            axios.post("/logout")
+                .then(response => {
+                    console.log(response.data + "로그아웃 처리");
+                    commit('resetState')
+                })
+                .catch(error =>{
+                    console.log(error.response);
+                })
         },
 
         getUserInfo({commit}, context){

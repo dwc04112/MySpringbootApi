@@ -51,6 +51,7 @@
 
 <script>
 import board from "@/views/board/board";
+
 export default {
   name: 'App',
   data: () => ({
