@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface MemberRepository extends CrudRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
 
-    @Query("select m.id, m.firstName, m.lastName, m.nickName FROM Member m where m.email=?1")
+    @Query("select m.mid, m.firstName, m.lastName, m.nickName FROM Member m where m.email=?1")
     List<Object[]> findMemberByEmail(String email);
 
 
@@ -22,11 +22,11 @@ public interface MemberRepository extends CrudRepository<Member, Long> {
 
     @Transactional
     @Modifying
-    @Query("update Member m set m.nickName = ?1 where m.id=?2")
+    @Query("update Member m set m.nickName = ?1 where m.mid=?2")
     void EditMemberNickName(String nickName, Long id);
 
     @Transactional
     @Modifying
-    @Query("update Member m set m.firstName = ?1, m.lastName= ?2  where m.id=?3")
+    @Query("update Member m set m.firstName = ?1, m.lastName= ?2  where m.mid=?3")
     void EditMemberName(String firstName,String lastName, Long id);
 }

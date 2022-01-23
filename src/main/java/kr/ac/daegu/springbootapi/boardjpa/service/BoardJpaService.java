@@ -11,6 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -30,6 +33,10 @@ public class BoardJpaService {
 
         return boardRepository.findBoardByBidAndIsDel(bId,"N");
     }
+
+
+
+
 
 
     public Page<Board> getBoardList(int page, int size, String stype, String svalue) {
@@ -80,6 +87,10 @@ public class BoardJpaService {
         return board.orElse(null);
     }
 
+    //조회수 증가
+    public void viewCountUp(int bid) {
+        boardRepository.updateReadCount(bid);
+    }
 
     //글쓰기
     public Board boardWrite( BoardDTO boardDTO) {
@@ -151,7 +162,7 @@ public class BoardJpaService {
     public ApiResponse<BoardDTO> updateIsDelBoardById(BoardDTO boardDTO) {
         // JDK 1.8 Optional에 관해 찾아볼것.
         int boardId = boardDTO.getBid();
-        log.debug("request.id=" + boardId);
+        log.debug("update isDel id =" + boardId);
         Optional<Board> boardData = boardRepository.findBoardByBid(boardId);
         // 위 boardData가 null 이면 RuntimeException 발생시키고 메소드 종료.
         Board data = boardData.orElseThrow(() -> new RuntimeException("no data"));
@@ -165,6 +176,9 @@ public class BoardJpaService {
             return new ApiResponse(true, "board id " + boardId + " is successfully deleted");
         }
     }
+
+
+
 
 /*
     public Board postBoard(BoardDTO boardDTO) {

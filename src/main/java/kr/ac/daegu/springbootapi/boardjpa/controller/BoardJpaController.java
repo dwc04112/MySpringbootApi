@@ -7,11 +7,13 @@ import kr.ac.daegu.springbootapi.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -29,14 +31,50 @@ public class BoardJpaController {
 
     @GetMapping(value = "/list")
     public List<Board> SelectList(){
+        log.debug("jwt home : " + SecurityContextHolder.getContext());
         return boardJpaService.getBoardListVue();
     }
 
     @GetMapping(value = "/{bid}")
-    public List<Board> SelectListid(@PathVariable int bid){
+    public List<Board> SelectListid(@PathVariable int bid, HttpServletRequest request, HttpServletResponse response){
+
+        // boolean viewCookie = boardJpaService.viewCookie(bid,request,response);
+
 
         return boardJpaService.getBoardByBId2(bid);
     }
+
+    @GetMapping(value = "/viewCount/{bid}")
+    public void viewCount(@PathVariable int bid, HttpServletRequest request, HttpServletResponse response){
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("viewCookie")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+        if (oldCookie != null) {
+
+            if (!oldCookie.getValue().contains("[" + bid + "]")) {
+                log.debug("기존 쿠키가 있지만 해당 board 조회가 없을 때");
+                boardJpaService.viewCountUp(bid);
+                oldCookie.setValue(oldCookie.getValue() + "_[" + bid + "]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(oldCookie);
+            }
+        } else {
+            log.debug("기존 쿠키가 없을 때");
+            boardJpaService.viewCountUp(bid);
+            Cookie newCookie = new Cookie("viewCookie","[" + bid + "]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 12);
+            response.addCookie(newCookie);
+        }
+    }
+
 
     @PostMapping(value = "/write")
     public Board boardWrite(@RequestBody BoardDTO boardDTO){

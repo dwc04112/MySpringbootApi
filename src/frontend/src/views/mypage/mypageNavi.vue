@@ -38,7 +38,7 @@
             </v-btn>
           </div>
           <div class="pa-2">
-            <v-btn block color="#E2C2B9" @click="linkTo('home')">
+            <v-btn block color="#E2C2B9" @click="logout">
               Logout
             </v-btn>
           </div>
@@ -64,7 +64,11 @@ export default {
   methods:{
     linkTo(link){
       this.$router.push({path:"/"+link})
-    }
+    },
+    logout(){
+      this.$store.dispatch('logout');
+      this.$router.push({path: './'});
+    },
   }
 }
 </script>

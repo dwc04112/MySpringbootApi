@@ -78,8 +78,11 @@
 </template>
 
 <script>
-
+import VueCookies from "vue-cookies";
+import Vue from "vue";
+Vue.use(VueCookies);
 export default {
+
   name: "board",
 
   data: () => ({
@@ -91,6 +94,14 @@ export default {
 
 
   methods: {
+    viewUsers(){
+      let bid = this.$route.query.bid
+      this.$axios.get("boardjpa/viewCount/"+ bid)
+      const cookie = this.$cookies.get('viewCookie');
+      console.log(cookie); //testValue
+    },
+
+
     detailUsers() {
       let data = this.$route.query.bid
       this.$axios.get("boardjpa/"+ data,)
@@ -137,6 +148,7 @@ export default {
     },
   },
   mounted() {
+    this.viewUsers();
     this.detailUsers();
   }
 }

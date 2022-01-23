@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,14 +33,16 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 
 
 
-
-
     // JPQL != SQL
     @Query("Select b FROM Board b where b.bid = ?1") // JPA를 이용하여 JPQL만든 후 쿼리를 날린다.
     Board selectBoard(int bId);
 
     @Query("select b.mid From Board b where b.bid = ?1")
     Long getMemberId(int bId);
+
+
+    @Query("select b.readCount from Board b where b.bid=?1")
+    Integer getReadCount(int bid);
 
 
     @Modifying
@@ -49,6 +52,12 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     // 최고 Id값을 가진 Board 엔터티를 가져옴.
 
     Board findTopByOrderByBidDesc();
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Board SET readCount = readCount + 1 where bid = ?1")
+    void updateReadCount(int bid);
+
 
     /*
     @Query("SELECT MIN(b.orderNum) FROM Board b" +

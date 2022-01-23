@@ -3,6 +3,7 @@ package kr.ac.daegu.springbootapi.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+@Slf4j
 @Component
 public class JwtTokenUtil {
     private static final String secret = "jwtpassword";
 
     public static final long JWT_TOKEN_VALIDITY_HOUR =  60 * 60 * 1000; // 1 hours
+
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getId);
@@ -32,12 +35,15 @@ public class JwtTokenUtil {
 
     private Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
+        log.debug("token time :: " + expiration);
         return expiration.before(new Date());
     }
 
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
+
+
 
     public String generateToken(String mid) {
         return generateToken(mid, new HashMap<>());
@@ -61,4 +67,6 @@ public class JwtTokenUtil {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
+
+
 }
