@@ -37,9 +37,9 @@ const userStore = {
 
 
         loginCheck: function (state, payload) {
-            console.log("hihi" + payload)
+            console.log("error code" + payload)
             if(payload===401){
-                state.token = null;
+               // state.token = null;
             }
             if (!state.token) {
                 alert("로그인이 만료되었습니다.")
@@ -55,14 +55,14 @@ const userStore = {
 
 
         resetState: function (state){
-
+        /*
             state.email = '';
             state.token = '';
             state.nickName = '';
             state.firstName = '';
             state.lastName = '';
             state.mid = '';
-
+         */
 
 
             console.log(state)
@@ -101,6 +101,7 @@ const userStore = {
             })
                 .then((res) => {
                     console.log(res.data)
+
                     data.nickName = res.data.nickName
                     data.firstName = res.data.firstName
                     data.lastName = res.data.lastName

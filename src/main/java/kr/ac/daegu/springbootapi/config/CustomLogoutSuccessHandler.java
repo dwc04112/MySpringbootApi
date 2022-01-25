@@ -1,20 +1,28 @@
 package kr.ac.daegu.springbootapi.config;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import kr.ac.daegu.springbootapi.token.Token;
+import kr.ac.daegu.springbootapi.token.TokenService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Local;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Date;
-import java.util.function.Function;
 
 
 @Slf4j
 public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler{
+
+    @Autowired
+    public TokenService tokenService;
 
     @Override public void onLogoutSuccess(HttpServletRequest request,
                                           HttpServletResponse response,
@@ -24,14 +32,19 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler{
         String requestTokenHeader = request.getHeader("Authorization");
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             String jwtToken = requestTokenHeader.substring(7);
-
-            JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
-            Date jwtTokenExp =jwtTokenUtil.getExpirationDateFromToken(jwtToken);
-            log.debug("Exp Time :: " + jwtTokenExp);
+            LocalTime jwtTokenExpTime = getExpTime(jwtToken);
+            Token data = tokenService.insertToken(jwtToken,jwtTokenExpTime);
         }
-        // 토큰 exp 구해오는것 까지.
-        // after 토큰 DB에 저장 후 인증필터에서 해당 토큰이 블랙리스트에 있는지 검사
         super.onLogoutSuccess(request, response, authentication);
+    }
+
+    public LocalTime getExpTime(String jwtToken){
+        JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
+        Date jwtTokenExp = jwtTokenUtil.getExpirationDateFromToken(jwtToken); //jwtTokenUtil 에서 구한 Date
+        LocalDateTime time2 = LocalDateTime.ofInstant(jwtTokenExp.toInstant(), ZoneId.systemDefault()); //data -> LocalDataTime
+        LocalTime JwtTokenTime = LocalTime.of(time2.getHour(), time2.getMinute(), time2.getSecond()); //LocalDataTime -> LocalTime
+        log.debug("time :: " + JwtTokenTime);
+        return JwtTokenTime;
     }
 }
 
