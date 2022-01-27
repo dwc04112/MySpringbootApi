@@ -36,17 +36,18 @@ const userStore = {
 
 
 
-        loginCheck: function (state, payload) {
-            console.log("error code" + payload)
-            if(payload===401){
-               // state.token = null;
+        loginCheck_401: function (state, payload) {
+            console.log("error code :: " + payload.status)
+            if(payload.status===401){
+                state.token = null;
             }
-            if (!state.token) {
+            if(payload.headers.header === "ExpToken"){
+                alert("이미 로그아웃 처리된 토큰입니다.")
+                router.push({ name: 'Login'})
+            }
+            else if (!state.token) {
                 alert("로그인이 만료되었습니다.")
-                router.push({ name: 'Login'
-                }).catch(error => {
-                    console.log(error)
-                })
+                router.push({ name: 'Login'})
             }
         },
         failUserInfo: function (){

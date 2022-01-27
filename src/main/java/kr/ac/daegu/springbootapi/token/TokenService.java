@@ -26,7 +26,6 @@ public class TokenService {
 
     public boolean compareToken(String jwtToken) {
         int result = tokenRepository.compareToken(jwtToken);
-        log.debug("result : " + result);
         return result == 0;
     }
 }

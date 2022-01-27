@@ -31,7 +31,6 @@ public class BoardJpaController {
 
     @GetMapping(value = "/list")
     public List<Board> SelectList(){
-        log.debug("jwt home : " + SecurityContextHolder.getContext());
         return boardJpaService.getBoardListVue();
     }
 

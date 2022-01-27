@@ -6,6 +6,8 @@ import kr.ac.daegu.springbootapi.security.service.JwtUserDetailsService;
 import kr.ac.daegu.springbootapi.token.TokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.hql.internal.ast.ErrorReporter;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -85,7 +88,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }else{
             username = null;
             jwtToken = null;
-            throw new ServletException("이미 로그아웃 처리된 token입니다");
+            response.addHeader("Header", "ExpToken");
+            log.warn("이미 로그아웃 처리된 token입니다");
         }
         filterChain.doFilter(request,response);
     }

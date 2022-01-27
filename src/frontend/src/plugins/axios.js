@@ -34,7 +34,7 @@ axios.interceptors.response.use(function (response) {
         console.log("exception Login page")
     }
     else if(error.response.status===401) {
-        store.commit('loginCheck', error.response.status)
+        store.commit('loginCheck_401', error.response)
     }
     return Promise.reject(error);
 });
